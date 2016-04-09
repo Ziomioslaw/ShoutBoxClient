@@ -821,5 +821,3 @@ var ShoutBox = ShoutBox || {};
         });
     }
 })(ShoutBox);
-
-// ShoutBox.API.sendCommandToView('notifierOn', 'favicon');
