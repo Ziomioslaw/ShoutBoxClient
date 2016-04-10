@@ -1,11 +1,11 @@
-function compearCollection(olds, news, fadd, fedit, fdelete) {
+function compareCollection(olds, news, fadd, fedit, fdelete) {
     var indexOfOld = 0;
     var maxOlds = olds.length;
     var ignore = true;
 
-    news.forEach(compearItem);
+    news.forEach(compareItem);
 
-    function compearItem(newShout) {
+    function compareItem(newShout) {
         var oldShout;
         if (indexOfOld >= maxOlds) {
             fadd(newShout);
@@ -25,7 +25,7 @@ function compearCollection(olds, news, fadd, fedit, fdelete) {
             }
 
             indexOfOld++;
-            compearItem(newShout);
+            compareItem(newShout);
             return;
         }
 
@@ -46,7 +46,7 @@ function unitTest() {
             return result;
         },
         run: function() {
-            compearCollection(olds, news,
+            compareCollection(olds, news,
                 function (shout) { additional.push(shout.id); },
                 function (shout) { editied.push(shout.id); },
                 function (shout) { deleted.push(shout.id); }
@@ -55,7 +55,7 @@ function unitTest() {
         },
         expectedDeleted: function(collection) {
             try {
-                compear(deleted, collection);
+                compare(deleted, collection);
             } catch (e) {
                 throw 'Deleted' + e;
             }
@@ -63,7 +63,7 @@ function unitTest() {
         },
         expectedAddition: function(collection) {
             try {
-                compear(additional, collection);
+                compare(additional, collection);
             } catch (e) {
                 throw 'Additional' + e;
             }
@@ -71,7 +71,7 @@ function unitTest() {
         },
         expectedEditied: function(collection) {
             try {
-                compear(editied, collection);
+                compare(editied, collection);
             } catch (e) {
                 throw 'Editied' + e;
             }
@@ -87,7 +87,7 @@ function unitTest() {
         });
     }
 
-    function compear(collection, expected) {
+    function compare(collection, expected) {
         if (collection.length !== expected.length) {
             console.log('Excepted: ', expected);
             console.log('Reviced:  ', collection);
