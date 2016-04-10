@@ -9,7 +9,7 @@
     context.HTMLView = function(api) {
         var privates = {
             visibleShouts: null,
-            $shoutbox: $('#shoutbox'),
+            $shoutBox: $('#shoutbox'),
             $shoutBoxForm: $('#shoutBoxForm'),
             $shoutBoxTextBox: $('#shoutBoxTextBox')[0]
         };
@@ -51,7 +51,7 @@
                 textBox.value += text;
             },
             getShoutBoxMainObject: function() {
-                return privates.$shoutbox;
+                return privates.$shoutBox;
             },
             getShoutBoxEditorObject: function() {
                 return privates.$shoutBoxTextBox;
@@ -65,10 +65,10 @@
         };
 
         function triggerEventsAfterParsedShouts() {
-            var newShouts = privates.$shoutbox.find('.newShout');
+            var newShouts = privates.$shoutBox.find('.newShout');
 
-            privates.$shoutbox.trigger('shoutbox:view:refresh');
-            privates.$shoutbox.trigger({
+            privates.$shoutBox.trigger('shoutbox:view:refresh');
+            privates.$shoutBox.trigger({
                 type: 'shoutbox:view:notify',
                 newShouts: newShouts.length,
                 newShoutsForUser: newShouts.filter('.shoutForYou').length
@@ -76,21 +76,21 @@
         }
 
         function markAllShoutsAsRead() {
-            privates.$shoutbox.find('.newShout').removeClass('newShout');
-            privates.$shoutbox.trigger('shoutbox:view:reset');
+            privates.$shoutBox.find('.newShout').removeClass('newShout');
+            privates.$shoutBox.trigger('shoutbox:view:reset');
         }
 
         function addNewShouts(newCollection) {
             var htmlCode;
 
-            privates.$shoutbox.find('#loading').remove();
+            privates.$shoutBox.find('#loading').remove();
 
             newCollection.forEach(additionTransformations);
             htmlCode = newCollection
                 .map(transformIntoHTMLCode)
                 .reduce(function(a, b) { return a + b; }, '');
 
-            privates.$shoutbox.find('#new_shout').replaceWith(htmlCode + '<span id="new_shout"></span>');
+            privates.$shoutBox.find('#new_shout').replaceWith(htmlCode + '<span id="new_shout"></span>');
         }
 
         function transformIntoHTMLCode(metadata) {
@@ -144,7 +144,7 @@
         }
 
         function getShoutHTML(shoutId) {
-            return privates.$shoutbox.find('#shout_' + shoutId + ' span.shoutMessage');
+            return privates.$shoutBox.find('#shout_' + shoutId + ' span.shoutMessage');
         }
     };
 })(ShoutBox);
