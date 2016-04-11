@@ -1,6 +1,5 @@
 (function(context) {
     var Translation = {
-        defaultTextBoxValue: '[wpisz wiadomość]',
         loadingText: 'Proszę czekać, pobieram dane ...',
         deletedShoutText: ' <strong>[Wiadomość usunięto]</strong>',
         editedShoutText: '[EDITED] '
@@ -45,13 +44,24 @@
                 triggerEventsAfterParsedShouts();
             },
             addTextValue: function(text) {
-                var textBox = privates.$shoutBoxTextBox;
-                if (textBox.value === Translation.defaultTextBoxValue) {
-                    textBox.value = '';
-                }
+                insertAtCursor(privates.$shoutBoxTextBox, text);
 
-                textBox.focus();
-                textBox.value += text;
+                function insertAtCursor(field, value) {
+                    var var1, var2;
+                    if (document.selection) { //IE support
+                        field.focus();
+                        var1 = document.selection.createRange();
+                        var1.text = value;
+                    } else if (field.selectionStart || field.selectionStart == '0') { //MOZILLA and others
+                        var1 = field.selectionStart;
+                        var2 = field.selectionEnd;
+                        field.value = field.value.substring(0, var1)
+                            + value
+                            + field.value.substring(var2, field.value.length);
+                    } else {
+                        field.value += value;
+                    }
+                }
             },
             getShoutBoxMainObject: function() {
                 return privates.$shoutBox;
@@ -147,7 +157,7 @@
         }
 
         function clearText() {
-            privates.$shoutBoxTextBox.value = Translation.defaultTextBoxValue;
+            privates.$shoutBoxTextBox.value = '';
         }
     };
 })(ShoutBox);
