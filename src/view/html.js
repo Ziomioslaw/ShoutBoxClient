@@ -9,6 +9,7 @@
         var privates = {
             visibleShouts: null,
             $shoutBox: $('#shoutbox'),
+            $shoutBoxShouts: $('#shoutbox > div'),
             $shoutBoxForm: $('#shoutBoxForm'),
             $shoutBoxTextBox: $('#shoutBoxTextBox')[0],
             lastMessage: null
@@ -45,6 +46,7 @@
             },
             addTextValue: function(text) {
                 insertAtCursor(privates.$shoutBoxTextBox, text);
+                privates.$shoutBoxTextBox.focus();
 
                 function insertAtCursor(field, value) {
                     var var1, var2;
@@ -74,7 +76,7 @@
         };
 
         function triggerEventsAfterParsedShouts() {
-            var newShouts = privates.$shoutBox.find('.newShout');
+            var newShouts = privates.$shoutBoxShouts.find('.newShout');
 
             privates.$shoutBox.trigger('shoutbox:view:refresh');
             privates.$shoutBox.trigger({
@@ -85,21 +87,21 @@
         }
 
         function markAllShoutsAsRead() {
-            privates.$shoutBox.find('.newShout').removeClass('newShout');
+            privates.$shoutBoxShouts.find('.newShout').removeClass('newShout');
             privates.$shoutBox.trigger('shoutbox:view:reset');
         }
 
         function addNewShouts(newCollection) {
             var htmlCode;
 
-            privates.$shoutBox.find('#loading').remove();
+            privates.$shoutBoxShouts.find('#loading').remove();
 
             newCollection.forEach(additionTransformations);
             htmlCode = newCollection
                 .map(transformIntoHTMLCode)
                 .reduce(function(a, b) { return a + b; }, '');
 
-            privates.$shoutBox.find('#new_shout').replaceWith(htmlCode + '<span id="new_shout"></span>');
+            privates.$shoutBoxShouts.find('#new_shout').replaceWith(htmlCode + '<span id="new_shout"></span>');
         }
 
         function transformIntoHTMLCode(metadata) {
@@ -153,7 +155,7 @@
         }
 
         function getShoutHTML(shoutId) {
-            return privates.$shoutBox.find('#shout_' + shoutId + ' span.shoutMessage');
+            return privates.$shoutBoxShouts.find('#shout_' + shoutId + ' span.shoutMessage');
         }
 
         function clearText() {
