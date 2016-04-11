@@ -11,20 +11,23 @@
             visibleShouts: null,
             $shoutBox: $('#shoutbox'),
             $shoutBoxForm: $('#shoutBoxForm'),
-            $shoutBoxTextBox: $('#shoutBoxTextBox')[0]
+            $shoutBoxTextBox: $('#shoutBoxTextBox')[0],
+            lastMessage: null
         };
 
         privates.$shoutBoxForm.submit(function(e) {
-            var text = privates.$shoutBoxTextBox.value;
-            var event = api.sendMessage(text);
+            var event, text = privates.$shoutBoxTextBox.value;
 
-            privates.$shoutBoxTextBox.value = event.message;
-
+            markAllShoutsAsRead();
+            event = api.sendMessage(text);
             if (event.stop) {
-                e.preventDefault();
+                privates.$shoutBoxTextBox.value = event.message;
+            } else {
+                clearText();
             }
 
-            return !event.stop;
+            e.preventDefault();
+            return false;
         });
 
         return {
@@ -56,12 +59,8 @@
             getShoutBoxEditorObject: function() {
                 return privates.$shoutBoxTextBox;
             },
-            markAllShoutsAsRead: function() {
-                markAllShoutsAsRead();
-            },
-            clearText: function() {
-                privates.$shoutBoxTextBox.value = Translation.defaultTextBoxValue;
-            }
+            markAllShoutsAsRead: markAllShoutsAsRead,
+            clearText: clearText
         };
 
         function triggerEventsAfterParsedShouts() {
@@ -145,6 +144,10 @@
 
         function getShoutHTML(shoutId) {
             return privates.$shoutBox.find('#shout_' + shoutId + ' span.shoutMessage');
+        }
+
+        function clearText() {
+            privates.$shoutBoxTextBox.value = Translation.defaultTextBoxValue;
         }
     };
 })(ShoutBox);

@@ -99,27 +99,18 @@ var ShoutBox = ShoutBox || {};
                 return privates.view[command].apply(privates.view, parameters);
             },
             sendMessage: function(message) {
-                var event = {
-                    wasChanged: false,
-                    origin: message,
-                    message: message,
-                    stop: false,
-                    api: api
-                };
-
-                context.BeforeSubmitManager.call(event);
-
-                if (!event.stop) {
-                    $.post(scripturl + '?action=shout', {
-                        qstr: scripturl + '?#shoutbox',
-                        email: '',
-                        displayname: userName,
-                        memberID: userId,
-                        message: event.message
-                    });
+                var event = prepearMessage(message);
+                if (event.stop) {
+                    return event;
                 }
 
-                return event;
+                return $.post(scripturl + '?action=shout', {
+                    qstr: scripturl + '?#shoutbox',
+                    displayname: userName,
+                    memberID: userId,
+                    message: event.message,
+                    sc: sessionId,
+                });
             },
             buildDeleteLink: function(shoutId) {
                 return scripturl + '?action=delete_shout;sesc=' + sessionId + ';sid=' + shoutId + '#shoutbox';
@@ -264,6 +255,7 @@ var ShoutBox = ShoutBox || {};
                         if (!ignore) {
                             fdelete(oldShout);
                         }
+
                         indexOfOld++;
                         compearItem(newShout);
                         return;
@@ -273,6 +265,20 @@ var ShoutBox = ShoutBox || {};
                     return;
                 }
             }
+        }
+
+        function prepearMessage(message) {
+            var event = {
+                wasChanged: false,
+                origin: message,
+                message: message,
+                stop: false,
+                api: api
+            };
+
+            context.BeforeSubmitManager.call(event);
+
+            return event;
         }
     };
 
