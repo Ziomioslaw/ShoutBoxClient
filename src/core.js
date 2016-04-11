@@ -40,7 +40,7 @@ var ShoutBox = ShoutBox || {};
                     event.message = registred[i](event.message, event);
                     event.wasChanged = event.origin !== event.message;
 
-                    if (event.stop) {
+                    if (event.stop || event.cancel) {
                         return;
                     }
                 }
@@ -100,7 +100,7 @@ var ShoutBox = ShoutBox || {};
             },
             sendMessage: function(message) {
                 var event = prepearMessage(message);
-                if (event.stop) {
+                if (event.cancel) {
                     return event;
                 }
 
@@ -273,6 +273,7 @@ var ShoutBox = ShoutBox || {};
                 origin: message,
                 message: message,
                 stop: false,
+                cancel: false,
                 api: api
             };
 

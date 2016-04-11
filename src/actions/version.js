@@ -8,6 +8,7 @@
            shout = '<div><span>' + versionText + ': ' + event.api.getVersion() + '</span></div>';
 
            event.stop = true;
+           event.cancel = true;
        }
 
        return shout;
