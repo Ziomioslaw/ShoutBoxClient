@@ -131,7 +131,7 @@ var ShoutBox = ShoutBox || {};
         return (function() {
             privates.view = new context[configuration.viewName](api);
             privates.storage = new context[configuration.storage]();
-            privates.refreshManager = new context.IntervalCallback(intervalCallback, configuration.timeForRefresh);
+            privates.refreshManager = new IntervalCallback(intervalCallback, configuration.timeForRefresh);
             privates.refreshManager.start();
 
             context.AdditionalFeatureManager.run(api, privates.view);
@@ -281,21 +281,6 @@ var ShoutBox = ShoutBox || {};
         }
     };
 
-    context.IntervalCallback = function(callback, delay) {
-        var idInterval;
-
-        return {
-            start: function() {
-                callback();
-                setInterval(callback, delay);
-            },
-            cancel: function() {
-                clearInterval(idInterval);
-                idInterval = null;
-            }
-        };
-    };
-
     context.PreferenceByCookieManager = function() {
         var cookieName = 'ShoutBox';
         var preference = null;
@@ -363,4 +348,20 @@ var ShoutBox = ShoutBox || {};
             }
         };
     }
+
+    function IntervalCallback(callback, delay) {
+        var idInterval = null;
+
+        return {
+            start: function() {
+                callback();
+                idInterval = setInterval(callback, delay);
+            },
+            cancel: function() {
+                clearInterval(idInterval);
+                idInterval = null;
+            }
+        };
+    }
+
 })(ShoutBox);
