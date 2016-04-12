@@ -75,6 +75,7 @@ var ShoutBox = ShoutBox || {};
             lastShoutId: null,
             storage: null,
             view: null,
+            refreshManager: null,
             user: { Id: userId, Name: userName }
         };
         var configuration = buildConfiguration(privates, paramaters);
@@ -104,12 +105,16 @@ var ShoutBox = ShoutBox || {};
                     return event;
                 }
 
+                privates.refreshManager.cancel();
+
                 return $.post(scripturl + '?action=shout', {
                     qstr: scripturl + '?#shoutbox',
                     displayname: userName,
                     memberID: userId,
                     message: event.message,
                     sc: sessionId,
+                }).then(function() {
+                    privates.refreshManager.start();
                 });
             },
             buildDeleteLink: function(shoutId) {
@@ -126,7 +131,8 @@ var ShoutBox = ShoutBox || {};
         return (function() {
             privates.view = new context[configuration.viewName](api);
             privates.storage = new context[configuration.storage]();
-            doAutoReload(api);
+            privates.refreshManager = new context.IntervalCallback(intervalCallback, configuration.timeForRefresh);
+            privates.refreshManager.start();
 
             context.AdditionalFeatureManager.run(api, privates.view);
 
@@ -168,7 +174,7 @@ var ShoutBox = ShoutBox || {};
             }
         }
 
-        function doAutoReload() {
+        function intervalCallback() {
             if (!window.XMLHttpRequest) {
                 throw "Can't work -> window.XMLHttpRequest not exist";
             }
@@ -176,14 +182,6 @@ var ShoutBox = ShoutBox || {};
             getXMLDocument(scripturl + '?action=shout_xml&limit=' + configuration.shoutsLimit + ';xml', function(XMLDoc) {
                 parseAndSendShoutsToView(repackShouts(XMLDoc));
             });
-
-            setRefresh();
-        }
-
-        function setRefresh(api) {
-            setTimeout(function() {
-                doAutoReload();
-            }, configuration.timeForRefresh);
         }
 
         function repackShouts(XMLDoc) {
@@ -281,6 +279,21 @@ var ShoutBox = ShoutBox || {};
 
             return event;
         }
+    };
+
+    context.IntervalCallback = function(callback, delay) {
+        var idInterval;
+
+        return {
+            start: function() {
+                callback();
+                setInterval(callback, delay);
+            },
+            cancel: function() {
+                clearInterval(idInterval);
+                idInterval = null;
+            }
+        };
     };
 
     context.PreferenceByCookieManager = function() {
