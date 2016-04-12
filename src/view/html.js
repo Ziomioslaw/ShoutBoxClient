@@ -119,7 +119,7 @@
         }
 
         function additionTransformations(metadata) {
-            metadata.classes = ['newShout'];
+            metadata.classes = [];
 
             if ((metadata.message.indexOf('@' + api.getUser().Name + ':') !== -1)
                 || (metadata.message.indexOf('@all:') !== -1)) {
@@ -128,6 +128,8 @@
 
             if (metadata.memberId == api.getUser().Id) {
                 metadata.classes.push('shoutItsYou');
+            } else {
+                metadata.classes.push('newShout');
             }
 
             if (metadata.message.match(/^&nbsp;\/me .*/)) {
