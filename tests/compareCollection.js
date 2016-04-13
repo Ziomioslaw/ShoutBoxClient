@@ -34,7 +34,7 @@ function compareCollection(olds, news, fadd, fedit, fdelete) {
     }
 }
 
-function unitTest() {
+function unitTest(name) {
     var olds, news, additional = [], editied = [], deleted = [];
     var result = {
         setOlds: function(collection) {
@@ -46,6 +46,9 @@ function unitTest() {
             return result;
         },
         run: function() {
+            console.log('Actual: ' + olds.map(function(shout) { return shout.id }));
+            console.log('New:    ' + news.map(function(shout) { return shout.id }));
+
             compareCollection(olds, news,
                 function (shout) { additional.push(shout.id); },
                 function (shout) { editied.push(shout.id); },
@@ -56,6 +59,7 @@ function unitTest() {
         expectedDeleted: function(collection) {
             try {
                 compare(deleted, collection);
+                console.log('Deleted correct');
             } catch (e) {
                 throw 'Deleted' + e;
             }
@@ -64,6 +68,7 @@ function unitTest() {
         expectedAddition: function(collection) {
             try {
                 compare(additional, collection);
+                console.log('Additional correct');
             } catch (e) {
                 throw 'Additional' + e;
             }
@@ -72,12 +77,15 @@ function unitTest() {
         expectedEditied: function(collection) {
             try {
                 compare(editied, collection);
+                console.log('Editied correct');
             } catch (e) {
                 throw 'Editied' + e;
             }
             return result;
         },
     };
+
+    console.log('TEST: ' + name);
 
     return result;
 
@@ -103,7 +111,7 @@ function unitTest() {
     }
 }
 
-(new unitTest())
+(new unitTest('Only additional'))
     .setOlds([1,2,3,4])
     .setNews(  [2,3,4,5])
     .run()
@@ -111,7 +119,9 @@ function unitTest() {
     .expectedAddition([5])
     .expectedEditied([]);
 
-(new unitTest())
+console.log('\n --- \n');
+
+(new unitTest('Deleted and excepted'))
     .setOlds([1,2,3,4])
     .setNews(  [2,  4,5,6])
     .run()
@@ -119,7 +129,9 @@ function unitTest() {
     .expectedAddition([5,6])
     .expectedEditied([]);
 
-(new unitTest())
+console.log('\n --- \n');
+
+(new unitTest('Only deleted'))
     .setOlds(  [2,3,4,5])
     .setNews([1,2,3,  5])
     .run()
