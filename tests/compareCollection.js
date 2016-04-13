@@ -1,9 +1,11 @@
+// core.js
 function compareCollection(olds, news, fadd, fedit, fdelete) {
     var indexOfOld = 0;
     var maxOlds = olds.length;
     var ignore = true;
 
     news.forEach(compareItem);
+    olds.slice(indexOfOld).forEach(fdelete);
 
     function compareItem(newShout) {
         var oldShout;
@@ -58,8 +60,7 @@ function unitTest(name) {
         },
         expectedDeleted: function(collection) {
             try {
-                compare(deleted, collection);
-                console.log('Deleted correct');
+                compare('Deleted', deleted, collection);
             } catch (e) {
                 throw 'Deleted' + e;
             }
@@ -67,8 +68,7 @@ function unitTest(name) {
         },
         expectedAddition: function(collection) {
             try {
-                compare(additional, collection);
-                console.log('Additional correct');
+                compare('Additional', additional, collection);
             } catch (e) {
                 throw 'Additional' + e;
             }
@@ -76,8 +76,7 @@ function unitTest(name) {
         },
         expectedEditied: function(collection) {
             try {
-                compare(editied, collection);
-                console.log('Editied correct');
+                compare('Editied', editied, collection);
             } catch (e) {
                 throw 'Editied' + e;
             }
@@ -95,19 +94,26 @@ function unitTest(name) {
         });
     }
 
-    function compare(collection, expected) {
-        if (collection.length !== expected.length) {
+    function compare(name, collection, expected) {
+        try {
+            if (collection.length !== expected.length) {
+                throw ' collection incorrect: exptecting: ' + expected.length + ', recived: ' + collection.length;
+            }
+
+            expected.forEach(function(item, index) {
+                if (collection[index] !== item) {
+                    throw ' collection item on index ' + index + ' is different that excepted';
+                }
+            });
+
+            console.log(name + ' correct');
+        }
+        catch (ex) {
+            console.log(name);
             console.log('Excepted: ', expected);
             console.log('Reviced:  ', collection);
-
-            throw ' collection incorrect: exptecting: ' + expected.length + ', recived: ' + collection.length;
+            throw ex;
         }
-
-        expected.forEach(function(item, index) {
-            if (collection[index] !== item) {
-                throw ' collection item on index ' + index + ' is different that excepted';
-            }
-        });
     }
 }
 
@@ -136,5 +142,25 @@ console.log('\n --- \n');
     .setNews([1,2,3,  5])
     .run()
     .expectedDeleted([4])
+    .expectedAddition([])
+    .expectedEditied([]);
+
+console.log('\n --- \n');
+
+(new unitTest('Last shout deleted'))
+    .setOlds(  [2,3,4,5])
+    .setNews([1,2,3,4])
+    .run()
+    .expectedDeleted([5])
+    .expectedAddition([])
+    .expectedEditied([]);
+
+console.log('\n --- \n');
+
+(new unitTest('More last shout deleted'))
+    .setOlds(  [2,3,4,5,6,7])
+    .setNews([1,2,3,4])
+    .run()
+    .expectedDeleted([5,6,7])
     .expectedAddition([])
     .expectedEditied([]);

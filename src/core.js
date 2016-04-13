@@ -214,7 +214,7 @@ var ShoutBox = ShoutBox || {};
             if (privates.actualShoutsCollections === null) {
                 privates.actualShoutsCollections = shouts;
             } else {
-                compearCollection(privates.actualShoutsCollections,
+                compareCollection(privates.actualShoutsCollections,
                         shouts,
                         function (shout) { additional.push(shout); },
                         function (shout) { editied.push(shout.id); },
@@ -229,8 +229,8 @@ var ShoutBox = ShoutBox || {};
             privates.view.shouts(
                     privates.actualShoutsCollections,
                     additional,
-                    deleted,
-                    editied
+                    editied,
+                    deleted
                 );
 
             privates.actualShoutsCollections = shouts;
@@ -241,6 +241,7 @@ var ShoutBox = ShoutBox || {};
                 var ignore = true;
 
                 news.forEach(compareItem);
+                olds.slice(indexOfOld).forEach(fdelete);
 
                 function compareItem(newShout) {
                     var oldShout;

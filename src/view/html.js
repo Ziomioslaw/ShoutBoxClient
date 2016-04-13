@@ -110,7 +110,7 @@
             var header = '<span class="shoutNick"><a href="' + api.buildProfileLink(metadata.memberId) + '">' + metadata.memberName + '</a>' + (!metadata.me ? ':' : '') + '</span>';
             var message = '<span class="shoutMessage">' + metadata.message + '</span>';
 
-            return '<div id="' + metadata.id + '" class="' + metadata.classes.join(' ') + '">' + [
+            return '<div id="shout_' + metadata.id + '" class="' + metadata.classes.join(' ') + '">' + [
                     deleteButton,
                     timeStamp,
                     header,
