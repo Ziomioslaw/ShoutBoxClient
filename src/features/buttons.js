@@ -48,7 +48,7 @@
     function addBeforeDeleteMessage(shoutboxAPI, view) {
         view.getShoutBoxMainObject().on('click', 'a.shoutDeleteButton', function(event) {
             if (confirm('Na pewno chcesz usunąć ten shout?')) {
-                return; // Allow to default action
+                shoutboxAPI.deleteShout($(event.target).parent()[0].id);
             }
 
             event.preventDefault();

@@ -123,6 +123,13 @@ var ShoutBox = ShoutBox || {};
             buildProfileLink: function(memberId) {
                 return scripturl + '?action=profile;u=' + memberId;
             },
+            deleteShout: function(shoutId) {
+                privates.refreshManager.cancel();
+
+                return $.get(this.buildDeleteLink(shoutId)).then(function() {
+                    privates.refreshManager.start();
+                });
+            },
             getUser: function() {
                 return privates.user;
             }
@@ -228,14 +235,14 @@ var ShoutBox = ShoutBox || {};
 
             privates.actualShoutsCollections = shouts;
 
-            function compearCollection(olds, news, fadd, fedit, fdelete) {
+            function compareCollection(olds, news, fadd, fedit, fdelete) {
                 var indexOfOld = 0;
                 var maxOlds = olds.length;
                 var ignore = true;
 
-                news.forEach(compearItem);
+                news.forEach(compareItem);
 
-                function compearItem(newShout) {
+                function compareItem(newShout) {
                     var oldShout;
                     if (indexOfOld >= maxOlds) {
                         fadd(newShout);
@@ -255,7 +262,7 @@ var ShoutBox = ShoutBox || {};
                         }
 
                         indexOfOld++;
-                        compearItem(newShout);
+                        compareItem(newShout);
                         return;
                     }
 
