@@ -2,7 +2,8 @@
     var Translation = {
         loadingText: 'Proszę czekać, pobieram dane ...',
         deletedShoutText: ' <strong>[Wiadomość usunięto]</strong>',
-        editedShoutText: '[EDITED] '
+        editedShoutText: '[EDITED] ',
+        wasEditText: 'Było: '
     };
 
     context.HTMLView = function(api) {
@@ -143,16 +144,18 @@
 
         function markDeletedShouts(idsOfDeleted, actualCollection) {
             idsOfDeleted.forEach(function(id) {
-                getShoutHTML(id).html(' ' + Translation.deletedShoutText);
+                var shout = getShoutHTML(id);
+
+                shout.attr('title', 'Deleted: ' + shout.html());
+                shout.html(' ' + Translation.deletedShoutText);
             });
         }
 
         function markEditedShouts(idsOfEdited, actualCollection) {
             idsOfEdited.forEach(function(id) {
-                var shout = actualCollection.find(function(shout) {
-                    return shout.id === id;
-                });
+                var shout = getShoutHTML(id);
 
+                shout.attr('title', Translation.wasEditText + shout.html());
                 getShoutHTML(id).html(Translation.editedShoutText + shout.message);
             });
         }
