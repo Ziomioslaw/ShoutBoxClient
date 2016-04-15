@@ -3,7 +3,7 @@
         loadingText: 'Proszę czekać, pobieram dane ...',
         deletedShoutText: ' <strong>[Wiadomość usunięto]</strong>',
         editedShoutText: '[EDITED] ',
-        wasEditText: 'Było: '
+        textChangedWasText: 'Było: '
     };
 
     context.HTMLView = function(api) {
@@ -146,8 +146,8 @@
             idsOfDeleted.forEach(function(id) {
                 var shout = getShoutHTML(id);
 
-                shout.attr('title', 'Deleted: ' + shout.html());
-                shout.html(' ' + Translation.deletedShoutText);
+                shout.attr('title', Translation.textChangedWasText + shout.html());
+                shout.html(Translation.deletedShoutText);
             });
         }
 
@@ -155,8 +155,8 @@
             idsOfEdited.forEach(function(id) {
                 var shout = getShoutHTML(id);
 
-                shout.attr('title', Translation.wasEditText + shout.html());
-                getShoutHTML(id).html(Translation.editedShoutText + shout.message);
+                shout.attr('title', Translation.textChangedWasText + shout.html());
+                shout.html(Translation.editedShoutText + shout.message);
             });
         }
 
