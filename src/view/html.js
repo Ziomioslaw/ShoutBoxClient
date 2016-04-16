@@ -154,9 +154,10 @@
         function markEditedShouts(idsOfEdited, actualCollection) {
             idsOfEdited.forEach(function(id) {
                 var shout = getShoutHTML(id);
+                var message = shout.html();
 
-                shout.attr('title', Translation.textChangedWasText + shout.html());
-                shout.html(Translation.editedShoutText + shout.message);
+                shout.attr('title', Translation.textChangedWasText + message);
+                shout.html(Translation.editedShoutText + message);
             });
         }
 
