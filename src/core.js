@@ -80,6 +80,9 @@ var ShoutBox = ShoutBox || {};
         };
         var configuration = buildConfiguration(privates, paramaters);
         var api = {
+            getShoutsLimit: function() {
+                return configuration.shoutsLimit;
+            },
             getVersion: function() {
                 return privates.version;
             },

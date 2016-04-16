@@ -24,6 +24,7 @@
             if (event.stop) {
                 privates.$shoutBoxTextBox.value = event.message;
             } else {
+                reduceShoutsNumber();
                 clearText();
             }
 
@@ -140,6 +141,7 @@
             }
 
             context.AdditionalParser.parse(metadata);
+            privates.visibleShouts.push(metadata);
         }
 
         function markDeletedShouts(idsOfDeleted, actualCollection) {
@@ -159,6 +161,16 @@
                 shout.attr('title', Translation.textChangedWasText + message);
                 shout.html(Translation.editedShoutText + message);
             });
+        }
+
+        function reduceShoutsNumber() {
+            var oldLenght = privates.visibleShouts.length - api.getShoutsLimit();
+
+            privates.visibleShouts
+                .splice(0, oldLenght)
+                .forEach(function(shout) {
+                    privates.$shoutBoxShouts.find('#shout_' + shout.id).remove();
+                });
         }
 
         function getShoutHTML(shoutId) {
