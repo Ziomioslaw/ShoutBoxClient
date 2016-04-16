@@ -3,6 +3,7 @@
 
     function colourNicks(shoutboxAPI, view) {
         var defaultColour = '#a4bf37';
+        var offlineColour = 'gray';
         var shouts = view.getShoutBoxMainObject();
         var nicks = {};
         var regex = /color: (#[0-9a-fA-F]+);/;
@@ -14,6 +15,8 @@
                 if (match) {
                     nicks[element.text] = match[1];
                 }
+            } else {
+                nicks[element.text] = defaultColour;
             }
         });
 
@@ -28,7 +31,7 @@
                 return nicks[name];
             }
 
-            return defaultColour;
+            return offlineColour;
         }
     }
 })(ShoutBox);
