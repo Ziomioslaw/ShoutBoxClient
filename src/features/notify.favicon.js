@@ -1,4 +1,4 @@
-(function(context) {
+(function(context, $) {
     context.AdditionalFeatureManager.register('faviconNotifier', faviconPainterNotifier, false);
 
     function faviconPainterNotifier(shoutBoxAPI, view) {
@@ -17,4 +17,4 @@
             $.faviconNotify('/favicon.ico');
         });
     }
-})(ShoutBox);
+})(ShoutBox, jQuery);
