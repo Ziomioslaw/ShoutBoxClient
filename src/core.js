@@ -2,25 +2,20 @@
 var ShoutBox = ShoutBox || {};
 
 (function(context) {
+    context.ifNullTakeDefault = function(value, defaultValue) {
+        return (value !== null) ? value : defaultValue;
+    };
+
     context.AdditionalFeatureManager = (function() {
         var register = [];
 
         return {
-            register: function(name, feature, defaultOn) {
-                feature.featureName = name;
-                feature.defaultOn = defaultOn;
+            register: function(feature) {
                 register.push(feature);
             },
             run: function(shoutboxApi, view) {
-                register.forEach(function(feature) {
-                    var on = shoutboxApi.getOptionValue(feature.featureName);
-                    if (on === null) {
-                        on = feature.defaultOn;
-                    }
-
-                    if (on) {
-                        feature(shoutboxApi, view);
-                    }
+                register.forEach(function (feature) {
+                    feature(shoutboxApi, view);
                 });
             }
         };

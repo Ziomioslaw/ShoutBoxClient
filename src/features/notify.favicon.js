@@ -1,7 +1,5 @@
 (function(context, $) {
-    context.AdditionalFeatureManager.register('faviconNotifier', faviconPainterNotifier, false);
-
-    function faviconPainterNotifier(shoutBoxAPI, view) {
+    context.AdditionalFeatureManager.register(function(shoutBoxAPI, view) {
         var $shoutBox = view.getShoutBoxMainObject();
 
         $shoutBox.on('shoutbox:view:notify', function(event) {
@@ -16,5 +14,5 @@
         $shoutBox.on('shoutbox:view:reset', function() {
             $.faviconNotify('/favicon.ico');
         });
-    }
+    });
 })(ShoutBox, jQuery);

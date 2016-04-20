@@ -1,4 +1,4 @@
-(function(context) {
+(function(context, $) {
     var Translation = {
         loadingText: 'Proszę czekać, pobieram dane ...',
         deletedShoutText: ' <strong>[Wiadomość usunięto]</strong>',
@@ -7,14 +7,19 @@
     };
 
     context.HTMLView = function(api) {
-        var privates = {
-            visibleShouts: null,
-            $shoutBox: $('#shoutbox'),
-            $shoutBoxShouts: $('#shoutbox > div'),
-            $shoutBoxForm: $('#shoutBoxForm'),
-            $shoutBoxTextBox: $('#shoutBoxTextBox')[0],
-            lastMessage: null
-        };
+        var privates = (function() {
+            var $shoutbox = $('#shoutbox');
+
+            return {
+                visibleShouts: null,
+                $shoutBox: $shoutbox,
+                $shoutBoxShouts: $shoutbox.find('#shoutbox-shouts'),
+                $shoutBoxForm: $shoutbox.find('#shoutBoxForm'),
+                $shoutBoxTextBox: $shoutbox.find('#shoutBoxTextBox')[0],
+                $shoutBoxOptions: $shoutbox.find('#shoutbox-options'),
+                lastMessage: null
+            };
+        })();
 
         privates.$shoutBoxForm.submit(function(e) {
             var event, text = privates.$shoutBoxTextBox.value;
@@ -72,6 +77,12 @@
             },
             getShoutBoxEditorObject: function() {
                 return privates.$shoutBoxTextBox;
+            },
+            registerOption: function(name) {
+                var id = 'shoutbox-option-' + name;
+                privates.$shoutBoxOptions.append('<div id="' + id + '" class="option"></div>');
+
+                return privates.$shoutBoxOptions.find('#' + id);
             },
             markAllShoutsAsRead: markAllShoutsAsRead,
             clearText: clearText
@@ -181,4 +192,4 @@
             privates.$shoutBoxTextBox.value = '';
         }
     };
-})(ShoutBox);
+})(ShoutBox, jQuery);

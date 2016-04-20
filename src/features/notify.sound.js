@@ -1,7 +1,7 @@
 (function(context) {
     var lastNewShoutNumber = 0;
 
-    context.AdditionalFeatureManager.register('soundButton', function(shoutboxAPI, view) {
+    context.AdditionalFeatureManager.register(function(shoutboxAPI, view) {
         var button = $('#shoutSoundNotifier');
         var soundOn = shoutboxAPI.getOptionValue('sound');
         var $shoutBox = view.getShoutBoxMainObject();
@@ -29,7 +29,7 @@
                 button.html('Włącz powiadomienia dźwiękowe');
             }
         }
-    }, true);
+    });
 
     function resetHandler(event) {
         lastNewShoutNumber = 0;

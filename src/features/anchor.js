@@ -1,15 +1,13 @@
 (function(context) {
-    context.AdditionalFeatureManager.register('anchor', shoutBoxAnchorManager, true);
-
-    function shoutBoxAnchorManager(shoutboxAPI, view) {
+    context.AdditionalFeatureManager.register(function(shoutboxAPI, view) {
         var anchorText = 'Zahacz Shoutboksa';
         var unanchorText = 'Odhacz Shoutboksa';
-        var $button = $('#shoutboxAnchorUnanchorButton');
         var $shoutbox = view.getShoutBoxMainObject();
         var textEdit = view.getShoutBoxEditorObject();
+        var button = view.registerOption('anchor', true);
 
         setButtonLabel();
-        $button.click(buttonClick);
+        button.click(buttonClick);
         $shoutbox.on('shoutbox:view:refresh', viewRefresh);
 
         function checkShoutBoxAnchored() {
@@ -28,7 +26,7 @@
         }
 
         function setButtonLabel() {
-            $button.html(checkShoutBoxAnchored() ? unanchorText : anchorText);
+            button.html(checkShoutBoxAnchored() ? unanchorText : anchorText);
         }
 
         function viewRefresh(e) {
@@ -36,5 +34,5 @@
                 textEdit.focus();
             }
         }
-    }
+    });
 })(ShoutBox);

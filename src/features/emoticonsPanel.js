@@ -1,15 +1,13 @@
-(function(context) {
-    context.AdditionalFeatureManager.register('emoticonPanel', shoutBoxEmoticonBox, true);
-
-    function shoutBoxEmoticonBox(shoutboxAPI, view) {
-        var labelEmoticonPanelOn = 'Pokaż emotikony';
+(function(context, $) {
+    context.AdditionalFeatureManager.register(function(shoutboxAPI, view) {
         var labelEmoticonPanelOff = 'Schowaj emotikony';
+        var labelEmoticonPanelOn = 'Pokaż emotikony';
+
         var emoticonPanelBox = $('#shoutbox-emoticons-box')
         var emoticonPanelButton = $('#shoutEmoticonsPanel');
         var optionName = 'emoticons';
-        var emoticonPanelOn = shoutboxAPI.getOptionValue(optionName);
-
-        view.registerOption();
+        var emoticonPanelOn = context.ifNullTakeDefault(shoutboxAPI.getOptionValue(optionName), true);
+        var emoticonPanelButton = view.registerOption(optionName);
 
         emoticonBox(emoticonPanelOn);
 
@@ -30,12 +28,11 @@
         function emoticonBox(show) {
             if (show) {
                 emoticonPanelBox.show();
-                emoticonPanelButton.html(labelEmoticonPanelOff);
+                emoticonPanelButton.html('<a>' + labelEmoticonPanelOff + '</a>');
             } else {
                 emoticonPanelBox.hide();
-                emoticonPanelButton.html(labelEmoticonPanelOn);
+                emoticonPanelButton.html('<a>' + labelEmoticonPanelOn + '</a>');
             }
         }
-    }
-
-})(ShoutBox);
+    });
+})(ShoutBox, jQuery);

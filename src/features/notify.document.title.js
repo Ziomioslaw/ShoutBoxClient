@@ -1,7 +1,5 @@
 (function(context) {
-    context.AdditionalFeatureManager.register('documentNotification', documentNotification, true);
-
-    function documentNotification(shoutBoxAPI, view) {
+    context.AdditionalFeatureManager.register(function(shoutBoxAPI, view) {
         var oryginalPageTitle = document.title;
         var $shoutBox = view.getShoutBoxMainObject();
 
@@ -24,5 +22,5 @@
         $shoutBox.on('shoutbox:view:reset', function() {
             document.title = oryginalPageTitle;
         });
-    }
+    });
 })(ShoutBox);

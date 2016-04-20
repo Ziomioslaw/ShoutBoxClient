@@ -1,7 +1,7 @@
 (function(context) {
-    context.AdditionalFeatureManager.register('readAllButton', shoutBoxAllShoutReadButton, true);
-    context.AdditionalFeatureManager.register('deleteButton', addBeforeDeleteMessage, true);
-    context.AdditionalFeatureManager.register('nicksButton', shoutAuthorsNicksToButton, true);
+    context.AdditionalFeatureManager.register(shoutBoxAllShoutReadButton);
+    context.AdditionalFeatureManager.register(addBeforeDeleteMessage);
+    context.AdditionalFeatureManager.register(shoutAuthorsNicksToButton);
 
     function shoutBoxAllShoutReadButton(shoutboxAPI) {
         $('#shoutboxButtonSetAllShoutsRead').click(function() {
