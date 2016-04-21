@@ -78,11 +78,8 @@
             getShoutBoxEditorObject: function() {
                 return privates.$shoutBoxTextBox;
             },
-            registerOption: function(name) {
-                var id = 'shoutbox-option-' + name;
-                privates.$shoutBoxOptions.append('<div id="' + id + '" class="option"></div>');
-
-                return privates.$shoutBoxOptions.find('#' + id);
+            registerOption: function(name, defaultValue) {
+                return new OptionButton(name, defaultValue, api, privates.$shoutBoxOptions);
             },
             markAllShoutsAsRead: markAllShoutsAsRead,
             clearText: clearText
@@ -190,6 +187,56 @@
 
         function clearText() {
             privates.$shoutBoxTextBox.value = '';
+        }
+
+        function OptionButton(optionName, defaultValue, api, $shoutBoxOptions) {
+            var clickCallback = null, afterApplyCallback = null;
+            var offLabel = null, onLabel = null, value = null;
+            var id = 'shoutbox-option-' + optionName;
+            var $button = $shoutBoxOptions
+                .append('<div id="' + id + '" class="option"></div>')
+                .find('#' + id)
+                .click(function(event) {
+                    value = !value;
+                    clickCallback(value);
+                    api.setOptionValue(optionName, value);
+                    buildTile();
+
+                    if (afterApplyCallback !== null) {
+                        afterApplyCallback(event);
+                    }
+                });
+
+            return {
+                setOffLabel: function(label) {
+                    offLabel = label;
+                    return this;
+                },
+                setOnLabel: function(label) {
+                    onLabel = label;
+                    return this;
+                },
+                setClickCallBack: function(click) {
+                    clickCallback = click;
+                    return this;
+                },
+                setAfterApplyCallback: function(callback) {
+                    afterApplyCallback = callback;
+                    return this;
+                },
+                run: function() {
+                    value = context.ifNullTakeDefault(api.getOptionValue(optionName), defaultValue);
+                    buildTile();
+                    clickCallback(value);
+                    return this;
+                }
+            };
+
+            function buildTile() {
+                var label = value ? offLabel : onLabel;
+
+                $button.html('<a>' + label + '</a>');
+            }
         }
     };
 })(ShoutBox, jQuery);
