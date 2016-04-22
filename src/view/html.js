@@ -10,6 +10,8 @@
         var privates = (function() {
             var $shoutbox = $('#shoutbox');
 
+            $shoutbox.html(buildShoutbox());
+
             return {
                 visibleShouts: null,
                 $shoutBox: $shoutbox,
@@ -19,6 +21,10 @@
                 $shoutBoxOptions: $shoutbox.find('#shoutbox-options'),
                 lastMessage: null
             };
+
+            function buildShoutbox() {
+                return '<div style="float: right; width: 40px;" id="shoutbox-options"></div><div style="width: auto; overflow: hidden; float: none" id="shoutbox-shouts"></div><div style="clear: both" id="shoutbox-form"><p><a href="http://www.gimpuj.info/index.php?action=shout_archive">Zobacz wszystkie</a> | <a href="#shoutbox" id="shoutboxButtonSetAllShoutsRead">Oznacz jako przeczytane</a> | <a href="#shoutbox" id="shoutboxAnchorUnanchorButton"></a> | <a href="#shoutbox" id="shoutEmoticonsPanel"></a> | <a href="#shoutbox" id="shoutSoundNotifier"></a></p><form method="post" action="http://www.gimpuj.info/index.php?action=shout" id="shoutBoxForm"><input type="hidden" name="sc" value="" ><input type="hidden" name="qstr" value=""><input type="hidden" name="email" value=""><input type="hidden" name="displayname" value=""><input type="hidden" name="memberID" value=""><input type="text" name="message" autocomplete="off" maxlength="500" size="100"  placeholder="[wpisz wiadomość]" id="shoutBoxTextBox"><input type="submit" value="Wyślij" name="submit"></form></div>';
+            }
         })();
 
         privates.$shoutBoxForm.submit(function(e) {
@@ -107,14 +113,12 @@
         function addNewShouts(newCollection) {
             var htmlCode;
 
-            privates.$shoutBoxShouts.find('#loading').remove();
-
             newCollection.forEach(additionTransformations);
             htmlCode = newCollection
                 .map(transformIntoHTMLCode)
                 .reduce(function(a, b) { return a + b; }, '');
 
-            privates.$shoutBoxShouts.find('#new_shout').replaceWith(htmlCode + '<span id="new_shout"></span>');
+            privates.$shoutBoxShouts.append(htmlCode);
         }
 
         function transformIntoHTMLCode(metadata) {
