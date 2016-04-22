@@ -15,17 +15,17 @@ module.exports = function(grunt) {
         sass: {
             options: {
                 style: 'compressed',
-                check: true,
+                sourcemap: 'none',
                 trace: true,
                 noCache: true
             },
-            dist: {
+            build: {
                 files: {
-                    'build/shoutbox.css' : 'build/shoutbox.css'
+                    'build/shoutbox.min.css' : 'build/shoutbox.sass'
                 }
             }
         },
-        clean: [ 'build/*.js' ],
+        clean: [ 'build/*' ],
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
