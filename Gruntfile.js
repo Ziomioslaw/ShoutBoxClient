@@ -4,8 +4,25 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         concat: {
             js: {
-                src: ['src/core.js', 'src/**/*.js'],
+                src: ['src/javascript/core.js', 'src/javascript/**/*.js'],
                 dest: 'build/concat.js'
+            },
+            sass: {
+                src: ['src/styles/*.sass'],
+                dest: 'build/shoutbox.sass'
+            }
+        },
+        sass: {
+            options: {
+                style: 'compressed',
+                check: true,
+                trace: true,
+                noCache: true
+            },
+            dist: {
+                files: {
+                    'build/shoutbox.css' : 'build/shoutbox.css'
+                }
             }
         },
         clean: [ 'build/*.js' ],
@@ -24,7 +41,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-sass');
 
     // Default task(s).
-    grunt.registerTask('default', ['clean', 'concat', 'uglify']);
+    grunt.registerTask('default', ['clean', 'concat', 'sass', 'uglify']);
 };
