@@ -78,6 +78,9 @@
             getShoutBoxEditorObject: function() {
                 return privates.$shoutBoxTextBox;
             },
+            getShoutFormObject: function() {
+                return privates.$shoutBoxForm;
+            },
             registerOption: function(name, defaultValue) {
                 return new OptionButton(name, defaultValue, api, privates.$shoutBoxOptions);
             },
