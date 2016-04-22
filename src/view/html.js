@@ -199,11 +199,10 @@
                 .click(function(event) {
                     value = !value;
 
-                    clickCallback(value);
+                    clickCallback();
 
                     clickCount++;
                     api.setOptionValue(optionName, value);
-                    buildTile();
 
                     if (afterApplyCallback !== null) {
                         afterApplyCallback(event);
@@ -233,18 +232,19 @@
                 },
                 run: function() {
                     value = context.ifNullTakeDefault(api.getOptionValue(optionName), defaultValue);
-                    buildTile();
-                    clickCallback(value);
+                    clickCallback();
                     return this;
                 }
             };
 
-            function clickCallback(value) {
+            function clickCallback() {
                 if (value) {
                     onClickCallback(clickCount);
                 } else {
                     offClickCallback(clickCount);
                 }
+
+                buildTile();
             }
 
             function buildTile() {
