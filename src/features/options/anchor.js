@@ -6,14 +6,13 @@
         view.registerOption('anchor', false)
             .setOnLabel('Zahacz')
             .setOffLabel('Odhacz')
-            .setClickCallBack(function(value) {
-                if (value) {
-                    $shoutbox.on('shoutbox:view:refresh', viewRefresh);
-                    window.location.hash = '#shoutbox';
-                } else {
-                    $shoutbox.off('shoutbox:view:refresh', viewRefresh);
-                    window.history.pushState('', document.title, window.location.pathname);
-                }
+            .setOnClickCallback(function() {
+                $shoutbox.on('shoutbox:view:refresh', viewRefresh);
+                window.location.hash = '#shoutbox';
+            })
+            .setOffClickCallback(function() {
+                $shoutbox.off('shoutbox:view:refresh', viewRefresh);
+                window.history.pushState('', document.title, window.location.pathname);
             })
             .run();
 

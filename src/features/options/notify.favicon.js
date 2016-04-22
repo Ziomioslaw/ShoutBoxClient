@@ -5,14 +5,13 @@
         view.registerOption('favicon', false)
             .setOnLabel('Włącz powiadomienia w favikonie')
             .setOffLabel('Wyłącz powiadomienia w favikonie')
-            .setClickCallBack(function(value) {
-                if (value) {
-                    $shoutBox.on('shoutbox:view:notify', notifyHandler);
-                    $shoutBox.on('shoutbox:view:reset', resetHandler);
-                } else {
-                    $shoutBox.off('shoutbox:view:notify', notifyHandler);
-                    $shoutBox.off('shoutbox:view:reset', resetHandler);
-                }
+            .setOnClickCallback(function() {
+                $shoutBox.on('shoutbox:view:notify', notifyHandler);
+                $shoutBox.on('shoutbox:view:reset', resetHandler);
+            })
+            .setOffClickCallback(function() {
+                $shoutBox.off('shoutbox:view:notify', notifyHandler);
+                $shoutBox.off('shoutbox:view:reset', resetHandler);
             })
             .run();
 

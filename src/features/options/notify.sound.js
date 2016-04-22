@@ -6,15 +6,17 @@
         view.registerOption('sound', false)
             .setOnLabel('Włącz powiadomienia dźwiękowe')
             .setOffLabel('Wyłącz powiadomienia dźwiękowe')
-            .setClickCallBack(function(value) {
-                if (value) {
+            .setOnClickCallback(function(clickCount) {
+                if (clickCount > 0) {
                     playSomeSounds('sounds/gets-in-the-way.wav');
-                    $shoutBox.on('shoutbox:view:notify', notifyHandler);
-                    $shoutBox.on('shoutbox:view:reset', resetHandler);
-                } else {
-                    $shoutBox.off('shoutbox:view:notify', notifyHandler);
-                    $shoutBox.off('shoutbox:view:reset', resetHandler);
                 }
+
+                $shoutBox.on('shoutbox:view:notify', notifyHandler);
+                $shoutBox.on('shoutbox:view:reset', resetHandler);
+            })
+            .setOffClickCallback(function() {
+                $shoutBox.off('shoutbox:view:notify', notifyHandler);
+                $shoutBox.off('shoutbox:view:reset', resetHandler);
             })
             .run();
 

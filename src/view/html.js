@@ -190,15 +190,18 @@
         }
 
         function OptionButton(optionName, defaultValue, api, $shoutBoxOptions) {
-            var clickCallback = null, afterApplyCallback = null;
-            var offLabel = null, onLabel = null, value = null;
+            var onClickCallback = null, offClickCallback = null, afterApplyCallback = null;
+            var offLabel = null, onLabel = null, value = null, clickCount = 0;
             var id = 'shoutbox-option-' + optionName;
             var $button = $shoutBoxOptions
                 .append('<div id="' + id + '" class="option"></div>')
                 .find('#' + id)
                 .click(function(event) {
                     value = !value;
+
                     clickCallback(value);
+
+                    clickCount++;
                     api.setOptionValue(optionName, value);
                     buildTile();
 
@@ -216,8 +219,12 @@
                     onLabel = label;
                     return this;
                 },
-                setClickCallBack: function(click) {
-                    clickCallback = click;
+                setOnClickCallback: function(click) {
+                    onClickCallback = click;
+                    return this;
+                },
+                setOffClickCallback: function(click) {
+                    offClickCallback = click;
                     return this;
                 },
                 setAfterApplyCallback: function(callback) {
@@ -231,6 +238,14 @@
                     return this;
                 }
             };
+
+            function clickCallback(value) {
+                if (value) {
+                    onClickCallback(clickCount);
+                } else {
+                    offClickCallback(clickCount);
+                }
+            }
 
             function buildTile() {
                 var label = value ? offLabel : onLabel;

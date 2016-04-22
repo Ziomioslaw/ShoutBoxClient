@@ -9,12 +9,11 @@
         view.registerOption('colourNicks', false)
             .setOnLabel('Pokazuj kolory na nickach')
             .setOffLabel('Niepokazuj kolorów na nickach')
-            .setClickCallBack(function(value) {
-                if (value) {
-                    shouts.on('shoutbox:view:notify', colourNicks);
-                } else {
-                    shouts.off('shoutbox:view:notify', colourNicks);
-                }
+            .setOnClickCallback(function() {
+                shouts.on('shoutbox:view:notify', colourNicks);
+            })
+            .setOffClickCallback(function() {
+                shouts.off('shoutbox:view:notify', colourNicks);
             })
             .setAfterApplyCallback(function() {
                 window.location.reload(true);

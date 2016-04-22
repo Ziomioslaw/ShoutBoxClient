@@ -5,12 +5,11 @@
         view.registerOption('emoticons', true)
             .setOnLabel('Pokaż emotikony')
             .setOffLabel('Schowaj emotikony')
-            .setClickCallBack(function(value) {
-                if (value) {
-                    emoticonPanelBox.show();
-                } else {
-                    emoticonPanelBox.hide();
-                }
+            .setOnClickCallback(function() {
+                emoticonPanelBox.show();
+            })
+            .setOffClickCallback(function() {
+                emoticonPanelBox.hide();
             })
             .run();
 
