@@ -121,6 +121,9 @@ var ShoutBox = ShoutBox || {};
             buildProfileLink: function(memberId) {
                 return scripturl + '?action=profile;u=' + memberId;
             },
+            buildLink: function(action) {
+                return 'http://www.gimpuj.info/index.php?action=' + action;
+            },
             deleteShout: function(shoutId) {
                 privates.refreshManager.cancel();
 
