@@ -23,9 +23,9 @@
             };
 
             function buildShoutbox() {
-                return '<div style="float: right; width: 40px;" id="shoutbox-options"></div>'
-                    + '<div style="width: auto; overflow: hidden; float: none" id="shoutbox-shouts"></div>'
-                    + '<div style="clear: both" id="shoutbox-form">'
+                return '<div id="shoutbox-options"></div>'
+                    + '<div id="shoutbox-shouts"></div>'
+                    + '<div id="shoutbox-form">'
                         + '<p><a href="' + api.buildLink('shout_archive') + '">Zobacz wszystkie</a> | <a href="#shoutbox" id="shoutboxButtonSetAllShoutsRead">Oznacz jako przeczytane</a></p>'
                         + '<form method="post" action="' + api.buildLink('shout') + '" id="shoutBoxForm">'
                             + '<input type="hidden" name="sc" value="" ><input type="hidden" name="qstr" value=""><input type="hidden" name="email" value=""><input type="hidden" name="displayname" value=""><input type="hidden" name="memberID" value="">'
