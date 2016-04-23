@@ -61,5 +61,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-scp');
 
     // Default task(s).
-    grunt.registerTask('default', ['clean', 'concat', 'sass', 'uglify', 'scp']);
+    grunt.registerTask('default', ['clean', 'concat', 'sass', 'uglify']);
+    grunt.registerTask('devUpload', ['clean', 'concat', 'sass', 'uglify', 'scp']);
 };
