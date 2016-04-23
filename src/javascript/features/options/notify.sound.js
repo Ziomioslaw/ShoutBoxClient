@@ -4,8 +4,8 @@
         var lastNewShoutNumber = 0;
 
         view.registerOption('sound', false)
-            .setOnLabel('Włącz powiadomienia dźwiękowe')
-            .setOffLabel('Wyłącz powiadomienia dźwiękowe')
+            .setOnLabel('icon-volume-high', 'Włącz powiadomienia dźwiękowe')
+            .setOffLabel('icon-volume-mute2', 'Wyłącz powiadomienia dźwiękowe')
             .setOnClickCallback(function(clickCount) {
                 if (clickCount > 0) {
                     playSomeSounds('sounds/gets-in-the-way.wav');

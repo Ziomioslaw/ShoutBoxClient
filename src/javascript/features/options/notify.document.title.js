@@ -4,8 +4,8 @@
         var $shoutBox = view.getShoutBoxMainObject();
 
         view.registerOption('pageTitle', true)
-            .setOnLabel('Włącz powiadomienia w tytule')
-            .setOffLabel('Wyłącz powiadomienia w tytule')
+            .setOnLabel('icon-embed', 'Włącz powiadomienia w tytule')
+            .setOffLabel('icon-embed2', 'Wyłącz powiadomienia w tytule')
             .setOnClickCallback(function() {
                 $shoutBox.on('shoutbox:view:notify', notifyHandler);
                 $shoutBox.on('shoutbox:view:reset', resetHandler);

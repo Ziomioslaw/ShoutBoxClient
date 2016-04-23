@@ -36,6 +36,14 @@ module.exports = function(grunt) {
                 dest: 'build/shoutbox.min.js'
             }
         },
+        copy: {
+            build: {
+                expand: true,
+                cwd: 'src/styles/',
+                src: 'fonts/**',
+                dest: 'build/'
+            }
+        },
         scp: {
             options: {
                 host: '<%= server.host %>',
@@ -45,8 +53,7 @@ module.exports = function(grunt) {
             upload: {
                 files: [{
                     cwd: 'build',
-                    src: ['*.js', '*.css'],
-                    filter: 'isFile',
+                    src: ['*.js', '*.css', 'fonts/*'],
                     dest: '<%= server.path %>'
                 }]
             },
@@ -58,9 +65,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-scp');
 
     // Default task(s).
     grunt.registerTask('default', ['clean', 'concat', 'sass', 'uglify']);
-    grunt.registerTask('devUpload', ['clean', 'concat', 'sass', 'uglify', 'scp']);
+    grunt.registerTask('devUpload', ['clean', 'concat', 'sass', 'uglify', 'copy', 'scp']);
 };

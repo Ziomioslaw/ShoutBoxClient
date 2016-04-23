@@ -229,12 +229,12 @@
                 });
 
             return {
-                setOffLabel: function(label) {
-                    offLabel = label;
+                setOffLabel: function(icon, title) {
+                    offLabel = '<span class="' + icon + '" title="' + title + '"></span>';
                     return this;
                 },
-                setOnLabel: function(label) {
-                    onLabel = label;
+                setOnLabel: function(icon, title) {
+                    onLabel = '<span class="' + icon + '" title="' + title + '"></span>';
                     return this;
                 },
                 setOnClickCallback: function(click) {
@@ -269,7 +269,7 @@
             function buildTile() {
                 var label = value ? offLabel : onLabel;
 
-                $button.html('<a>' + label + '</a>');
+                $button.html(label);
             }
         }
     };

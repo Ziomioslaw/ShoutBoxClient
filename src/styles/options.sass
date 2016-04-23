@@ -1,4 +1,75 @@
+@font-face
+    font-family: 'icomoon'
+    src: url('fonts/icomoon.eot?oggdl3')
+    src: url('fonts/icomoon.eot?oggdl3#iefix') format('embedded-opentype'), url('fonts/icomoon.ttf?oggdl3') format('truetype'), url('fonts/icomoon.woff?oggdl3') format('woff'), url('fonts/icomoon.svg?oggdl3#icomoon') format('svg')
+    font-weight: normal
+    font-style: normal
+
 #shoutbox-options
     .option
         width: 40px
         height: 40px
+        -webkit-transition: all 1s ease-out
+        -moz-transition: all 1s ease-out
+        -o-transition: all 1s ease-in-out
+        transition: all 1s ease-out
+        -webkit-border-top-right-radius: 10px
+        -webkit-border-bottom-right-radius: 10px
+        -moz-border-radius-topright: 10px
+        -moz-border-radius-bottomright: 10px
+        border-top-right-radius: 10px
+        border-bottom-right-radius: 10px
+        padding: 7px
+        font-size: 23pt
+        color: #a4bf37
+
+        &:hover
+            background: #626262
+
+        [class^="icon-"], [class*=" icon-"]
+            /* use !important to prevent issues with browser extensions that change fonts */
+            font-family: 'icomoon' !important
+            speak: none
+            font-style: normal
+            font-weight: normal
+            font-variant: normal
+            text-transform: none
+            line-height: 1
+            -webkit-font-smoothing: antialiased
+            -moz-osx-font-smoothing: grayscale
+
+    .icon-bubble:before
+        content: "\e900"
+
+    .icon-bubble2:before
+        content: "\e901"
+
+    .icon-attachment:before
+        content: "\e902"
+
+    .icon-wink2:before
+        content: "\e903"
+
+    .icon-wondering2:before
+        content: "\e904"
+
+    .icon-cross:before
+        content: "\e905"
+
+    .icon-volume-high:before
+        content: "\e906"
+
+    .icon-volume-mute2:before
+        content: "\e907"
+
+    .icon-checkbox-checked:before
+        content: "\e908"
+
+    .icon-checkbox-unchecked:before
+        content: "\e909"
+
+    .icon-embed:before
+        content: "\e90a"
+
+    .icon-embed2:before
+        content: "\e90b"

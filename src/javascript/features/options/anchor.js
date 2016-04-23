@@ -4,8 +4,8 @@
         var textEdit = view.getShoutBoxEditorObject();
 
         view.registerOption('anchor', false)
-            .setOnLabel('Zahacz')
-            .setOffLabel('Odhacz')
+            .setOnLabel('icon-attachment', 'Zahacz')
+            .setOffLabel('icon-attachment', 'Odhacz')
             .setOnClickCallback(function() {
                 $shoutbox.on('shoutbox:view:refresh', viewRefresh);
                 window.location.hash = '#shoutbox';

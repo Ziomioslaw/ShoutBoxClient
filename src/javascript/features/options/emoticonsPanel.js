@@ -44,8 +44,8 @@
                 });
 
         view.registerOption('emoticons', true)
-            .setOnLabel('Pokaż emotikony')
-            .setOffLabel('Schowaj emotikony')
+            .setOnLabel('icon-wink2', 'Pokaż emotikony')
+            .setOffLabel('icon-wondering2', 'Schowaj emotikony')
             .setOnClickCallback(function() {
                 emoticonPanelBox.show();
             })

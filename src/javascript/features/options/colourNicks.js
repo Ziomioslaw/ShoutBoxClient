@@ -7,8 +7,8 @@
         var nicks = {};
 
         view.registerOption('colourNicks', false)
-            .setOnLabel('Pokazuj kolory na nickach')
-            .setOffLabel('Niepokazuj kolorów na nickach')
+            .setOnLabel('icon-bubble', 'Pokazuj kolory na nickach')
+            .setOffLabel('icon-bubble2', 'Niepokazuj kolorów na nickach')
             .setOnClickCallback(function() {
                 shouts.on('shoutbox:view:notify', colourNicks);
             })

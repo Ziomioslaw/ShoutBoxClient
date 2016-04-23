@@ -3,8 +3,8 @@
         var $shoutBox = view.getShoutBoxMainObject();
 
         view.registerOption('favicon', false)
-            .setOnLabel('Włącz powiadomienia w favikonie')
-            .setOffLabel('Wyłącz powiadomienia w favikonie')
+            .setOnLabel('icon-checkbox-checked', 'Włącz powiadomienia w favikonie')
+            .setOffLabel('icon-checkbox-unchecked', 'Wyłącz powiadomienia w favikonie')
             .setOnClickCallback(function() {
                 $shoutBox.on('shoutbox:view:notify', notifyHandler);
                 $shoutBox.on('shoutbox:view:reset', resetHandler);
