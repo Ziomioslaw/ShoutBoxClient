@@ -2,7 +2,7 @@
     var Translation = {
         loadingText: 'Proszę czekać, pobieram dane ...',
         deletedShoutText: ' <strong>[Wiadomość usunięto]</strong>',
-        editedShoutText: '[EDITED] ',
+        editedShoutText: 'EDITED',
         textChangedWasText: 'Było: '
     };
 
@@ -182,8 +182,12 @@
                 var message = shout.html();
 
                 shout.attr('title', Translation.textChangedWasText + message);
-                shout.html(Translation.editedShoutText + message);
+                shout.html(buildInfoBox(Translation.editedShoutText) + message);
             });
+        }
+
+        function buildInfoBox(text) {
+            return '<span class="infobox">' + text + '</span>';
         }
 
         function reduceShoutsNumber() {
