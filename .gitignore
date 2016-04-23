@@ -2,3 +2,5 @@ build/
 node_modules/
 .sass-cache/
 server.json
+npm-debug.log
+
