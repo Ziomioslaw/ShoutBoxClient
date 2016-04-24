@@ -3,9 +3,12 @@
     context.AdditionalFeatureManager.register(addBeforeDeleteMessage);
     context.AdditionalFeatureManager.register(shoutAuthorsNicksToButton);
 
-    function shoutBoxAllShoutReadButton(shoutboxAPI) {
-        $('#shoutboxButtonSetAllShoutsRead').click(function() {
+    function shoutBoxAllShoutReadButton(shoutboxAPI, view) {
+        view.registerButton('Oznacz jako przeczytane', function(event) {
             shoutboxAPI.sendCommandToView('markAllShoutsAsRead');
+
+            event.preventDefault();
+            return false;
         });
     }
 

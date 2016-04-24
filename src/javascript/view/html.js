@@ -19,6 +19,7 @@
                 $shoutBoxShouts: $shoutbox.find('#shoutbox-shouts'),
                 $shoutBoxOptions: $shoutbox.find('#shoutbox-options'),
                 $shoutBoxForm: $form.find('form'),
+                $shoutBoxHorizontalButtons: $form.find('p'),
                 shoutBoxTextBox: $form.find('#shoutBoxTextBox')[0],
                 lastMessage: null
             };
@@ -27,7 +28,7 @@
                 return '<div id="shoutbox-options"></div>'
                     + '<div id="shoutbox-shouts"></div>'
                     + '<div id="shoutbox-form">'
-                        + '<p><a href="' + api.buildLink('shout_archive') + '">Zobacz wszystkie</a> | <a href="#shoutbox" id="shoutboxButtonSetAllShoutsRead">Oznacz jako przeczytane</a></p>'
+                        + '<p><a href="' + api.buildLink('shout_archive') + '">Zobacz wszystkie</a></p>'
                         + '<form method="post" action="' + api.buildLink('shout') + '" >'
                             + '<input type="text" name="message" autocomplete="off" maxlength="500" size="100"  placeholder="[wpisz wiadomość]" id="shoutBoxTextBox" /><input type="submit" value="Wyślij" name="submit" />'
                         + '</form>'
@@ -97,6 +98,14 @@
             },
             registerOption: function(name, defaultValue) {
                 return new OptionButton(name, defaultValue, api, privates.$shoutBoxOptions);
+            },
+            registerButton: function(label, callback) {
+                privates
+                    .$shoutBoxHorizontalButtons
+                    .append(' | <a href="#">' + label +'</a>')
+                    .find('a')
+                    .last()
+                    .click(callback);
             },
             markAllShoutsAsRead: markAllShoutsAsRead,
             clearText: clearText
