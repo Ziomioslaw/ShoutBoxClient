@@ -8,17 +8,18 @@
 
     context.HTMLView = function(api) {
         var privates = (function() {
-            var $shoutbox = $('#shoutbox');
+            var $form, $shoutbox = $('#shoutbox');
 
             $shoutbox.html(buildShoutbox());
+            $form = $shoutbox.find('#shoutbox-form');
 
             return {
                 visibleShouts: null,
                 $shoutBox: $shoutbox,
                 $shoutBoxShouts: $shoutbox.find('#shoutbox-shouts'),
-                $shoutBoxForm: $shoutbox.find('#shoutBoxForm'),
-                $shoutBoxTextBox: $shoutbox.find('#shoutBoxTextBox')[0],
                 $shoutBoxOptions: $shoutbox.find('#shoutbox-options'),
+                $shoutBoxForm: $form.find('form'),
+                shoutBoxTextBox: $form.find('#shoutBoxTextBox')[0],
                 lastMessage: null
             };
 
@@ -27,21 +28,20 @@
                     + '<div id="shoutbox-shouts"></div>'
                     + '<div id="shoutbox-form">'
                         + '<p><a href="' + api.buildLink('shout_archive') + '">Zobacz wszystkie</a> | <a href="#shoutbox" id="shoutboxButtonSetAllShoutsRead">Oznacz jako przeczytane</a></p>'
-                        + '<form method="post" action="' + api.buildLink('shout') + '" id="shoutBoxForm">'
-                            + '<input type="hidden" name="sc" value="" ><input type="hidden" name="qstr" value=""><input type="hidden" name="email" value=""><input type="hidden" name="displayname" value=""><input type="hidden" name="memberID" value="">'
-                            + '<input type="text" name="message" autocomplete="off" maxlength="500" size="100"  placeholder="[wpisz wiadomość]" id="shoutBoxTextBox"><input type="submit" value="Wyślij" name="submit">'
+                        + '<form method="post" action="' + api.buildLink('shout') + '" >'
+                            + '<input type="text" name="message" autocomplete="off" maxlength="500" size="100"  placeholder="[wpisz wiadomość]" id="shoutBoxTextBox" /><input type="submit" value="Wyślij" name="submit" />'
                         + '</form>'
                     + '</div>';
             }
         })();
 
         privates.$shoutBoxForm.submit(function(e) {
-            var event, text = privates.$shoutBoxTextBox.value;
+            var event, text = privates.shoutBoxTextBox.value;
 
             markAllShoutsAsRead();
             event = api.sendMessage(text);
             if (event.stop) {
-                privates.$shoutBoxTextBox.value = event.message;
+                privates.shoutBoxTextBox.value = event.message;
             } else {
                 reduceShoutsNumber();
                 clearText();
@@ -66,8 +66,8 @@
                 triggerEventsAfterParsedShouts();
             },
             addTextValue: function(text) {
-                insertAtCursor(privates.$shoutBoxTextBox, text);
-                privates.$shoutBoxTextBox.focus();
+                insertAtCursor(privates.shoutBoxTextBox, text);
+                privates.shoutBoxTextBox.focus();
 
                 function insertAtCursor(field, value) {
                     var var1, var2;
@@ -90,7 +90,7 @@
                 return privates.$shoutBox;
             },
             getShoutBoxEditorObject: function() {
-                return privates.$shoutBoxTextBox;
+                return privates.shoutBoxTextBox;
             },
             getShoutFormObject: function() {
                 return privates.$shoutBoxForm;
@@ -205,7 +205,7 @@
         }
 
         function clearText() {
-            privates.$shoutBoxTextBox.value = '';
+            privates.shoutBoxTextBox.value = '';
         }
 
         function OptionButton(optionName, defaultValue, api, $shoutBoxOptions) {
