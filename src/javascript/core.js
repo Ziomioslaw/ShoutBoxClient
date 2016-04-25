@@ -1,7 +1,7 @@
 'use strict';
 var ShoutBox = ShoutBox || {};
 
-(function(context) {
+(function(context, $) {
     context.ifNullTakeDefault = function(value, defaultValue) {
         return (value !== null) ? value : defaultValue;
     };
@@ -330,7 +330,7 @@ var ShoutBox = ShoutBox || {};
             var json = JSON.stringify(preference);
             $.cookie(cookieName, json);
         }
-    }
+    };
 
     context.PreferenceByLocalStorageManager = function() {
         var prefix = 'shoutbox:';
@@ -356,7 +356,7 @@ var ShoutBox = ShoutBox || {};
                 window.localStorage.setItem(prefix + name, value);
             }
         };
-    }
+    };
 
     function IntervalCallback(callback, delay) {
         var idInterval = null;
@@ -372,5 +372,4 @@ var ShoutBox = ShoutBox || {};
             }
         };
     }
-
-})(ShoutBox);
+})(ShoutBox, jQuery);
