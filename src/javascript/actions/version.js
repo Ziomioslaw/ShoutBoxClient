@@ -5,7 +5,7 @@
        var versionText = 'Wersja Shoutboksa';
 
        if (shout === '/v') {
-           shout = '<div><span>' + versionText + ': ' + event.api.getVersion() + '</span></div>';
+           event.api.addInfoShout(versionText + ': ' + event.api.getVersion());
 
            event.stop = true;
            event.cancel = true;

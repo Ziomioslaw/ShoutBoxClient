@@ -87,6 +87,9 @@
                     }
                 }
             },
+            addInfoShout: function(time, text) {
+                privates.$shoutBoxShouts.append('<div><span class="shoutTimeMarker"><b>Dzisiaj</b> o ' + time + '</span> <span class="shoutNick"><a href="#" >' + api.getShoutBoxInfoShoutNick() + '</a>:</span> <span class="shoutMessage"><span class="infobox">INFO</span>' + text + '</span></div>');
+            },
             getShoutBoxMainObject: function() {
                 return privates.$shoutBox;
             },

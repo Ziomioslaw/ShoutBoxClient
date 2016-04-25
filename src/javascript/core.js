@@ -115,6 +115,15 @@ var ShoutBox = ShoutBox || {};
                     privates.refreshManager.start();
                 });
             },
+            addInfoShout: function(text) {
+                var time = timeFormat(new Date());
+
+                privates.view.addInfoShout(time, text);
+
+                function timeFormat(time) {
+                    return ('0' + time.getHours()).slice(-2) + ':' + ('0' + time.getMinutes()).slice(-2) + ':' + ('0' + time.getSeconds()).slice(-2);
+                }
+            },
             buildDeleteLink: function(shoutId) {
                 return scripturl + '?action=delete_shout;sesc=' + sessionId + ';sid=' + shoutId + '#shoutbox';
             },
@@ -133,6 +142,9 @@ var ShoutBox = ShoutBox || {};
             },
             getUser: function() {
                 return privates.user;
+            },
+            getShoutBoxInfoShoutNick: function() {
+                return 'ShoutBox';
             }
         };
 
