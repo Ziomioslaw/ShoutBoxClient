@@ -4,8 +4,8 @@
         var $shoutBox = view.getShoutBoxMainObject();
 
         view.registerOption('hidePictures', false)
-            .setOnLabel('', 'Spłaszczaj obrazki do linków')
-            .setOffLabel('', 'Pokazuj obrazki jako obrazki')
+            .setOnLabel('icon-file-empty', 'Spłaszczaj obrazki do linków')
+            .setOffLabel('icon-file-picture', 'Nie spłaszczaj obrazków do linków')
             .setOnClickCallback(function() {
                 $shoutBox.on('shoutbox:view:notify', notifyHandler);
                 notifyHandler();
