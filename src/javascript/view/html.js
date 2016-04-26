@@ -30,7 +30,8 @@
                     + '<div id="shoutbox-form">'
                         + '<p><a href="' + api.buildLink('shout_archive') + '">Zobacz wszystkie</a></p>'
                         + '<form method="post" action="' + api.buildLink('shout') + '" >'
-                            + '<input type="text" name="message" autocomplete="off" maxlength="500" size="100"  placeholder="[wpisz wiadomość]" id="shoutBoxTextBox" /><input type="submit" value="Wyślij" name="submit" />'
+                            + '<input type="text" name="message" autocomplete="off" maxlength="500" size="100" placeholder="[wpisz wiadomość]" id="shoutBoxTextBox" />'
+                            + '<input type="submit" value="Wyślij" name="submit" />'
                         + '</form>'
                     + '</div>';
             }
@@ -184,7 +185,7 @@
                 var shout = getShoutHTML(id);
 
                 shout.attr('title', Translation.textChangedWasText + shout.html());
-                shout.html(Translation.deletedShoutText);
+                shout.html('<span class="infobox">DELETED</span>');
             });
         }
 

@@ -87,6 +87,9 @@ var ShoutBox = ShoutBox || {};
             setOptionValue: function(name, value) {
                 privates.storage.setValue(name, value);
             },
+            getConfigValue: function(name) {
+                return configuration[name];
+            },
             sendCommandToView: function() {
                 var parameters = Array.slice(arguments);
                 var command = parameters.shift();
@@ -169,18 +172,20 @@ var ShoutBox = ShoutBox || {};
                 timeForRefresh: 10000,
                 viewName: 'HTMLView',
                 storage: 'PreferenceByLocalStorageManager',
-                publicAPI: false
+                publicAPI: false,
+                showNoviceWarning: true
             };
 
             if (paramaters) {
                 addOptionIfExist('shoutsLimit', toInt);
                 addOptionIfExist('publicAPI', toBoolean);
+                addOptionIfExist('showNoviceWarning', toBoolean);
             }
 
             return configuration;
 
             function addOptionIfExist(name, convert) {
-                if (paramaters.hasOwnProperty('name')) {
+                if (paramaters.hasOwnProperty(name)) {
                     configuration[name] = convert(paramaters[name]);
                 }
             }
