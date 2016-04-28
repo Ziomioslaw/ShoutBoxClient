@@ -17,11 +17,11 @@
                 visibleShouts: null,
                 $shoutBox: $shoutbox,
                 $shoutBoxShouts: $shoutbox.find('#shoutbox-shouts'),
-                $shoutBoxOptions: $shoutbox.find('#shoutbox-options'),
                 $shoutBoxForm: $form.find('form'),
                 $shoutBoxHorizontalButtons: $form.find('p'),
                 shoutBoxTextBox: $form.find('#shoutBoxTextBox')[0],
-                lastMessage: null
+                lastMessage: null,
+                optionsManager: new context.OptionsManager(api, $shoutbox.find('#shoutbox-options'))
             };
 
             function buildShoutbox() {
@@ -97,7 +97,7 @@
                 return privates.$shoutBoxForm;
             },
             registerOption: function(name, defaultValue) {
-                return new OptionButton(name, defaultValue, api, privates.$shoutBoxOptions);
+                return privates.optionsManager.registerOption(name, defaultValue);
             },
             registerButton: function(label, callback) {
                 privates
@@ -215,71 +215,6 @@
 
         function clearText() {
             privates.shoutBoxTextBox.value = '';
-        }
-
-        function OptionButton(optionName, defaultValue, api, $shoutBoxOptions) {
-            var onClickCallback = null, offClickCallback = null, afterApplyCallback = null;
-            var offLabel = null, onLabel = null, value = null, clickCount = 0;
-            var id = 'shoutbox-option-' + optionName;
-            var $button = $shoutBoxOptions
-                .append('<div id="' + id + '" class="option"></div>')
-                .find('#' + id)
-                .click(function(event) {
-                    value = !value;
-
-                    clickCallback();
-
-                    clickCount++;
-                    api.setOptionValue(optionName, value);
-
-                    if (afterApplyCallback !== null) {
-                        afterApplyCallback(event);
-                    }
-                });
-
-            return {
-                setOffLabel: function(icon, title) {
-                    offLabel = '<span class="' + icon + '" title="' + title + '"></span>';
-                    return this;
-                },
-                setOnLabel: function(icon, title) {
-                    onLabel = '<span class="' + icon + '" title="' + title + '"></span>';
-                    return this;
-                },
-                setOnClickCallback: function(click) {
-                    onClickCallback = click;
-                    return this;
-                },
-                setOffClickCallback: function(click) {
-                    offClickCallback = click;
-                    return this;
-                },
-                setAfterApplyCallback: function(callback) {
-                    afterApplyCallback = callback;
-                    return this;
-                },
-                run: function() {
-                    value = context.ifNullTakeDefault(api.getOptionValue(optionName), defaultValue);
-                    clickCallback();
-                    return this;
-                }
-            };
-
-            function clickCallback() {
-                if (value) {
-                    onClickCallback(clickCount);
-                } else {
-                    offClickCallback(clickCount);
-                }
-
-                buildTile();
-            }
-
-            function buildTile() {
-                var label = value ? offLabel : onLabel;
-
-                $button.html(label);
-            }
         }
     };
 })(ShoutBox, jQuery);
