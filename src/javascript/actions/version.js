@@ -1,17 +1,13 @@
-(function(context) {
-    context.BeforeSubmitManager.register(versionPrint);
+context.BeforeSubmitManager.register(function(shout, event) {
+    var versionText = 'Wersja Shoutboksa';
 
-    function versionPrint(shout, event) {
-        var versionText = 'Wersja Shoutboksa';
+    if (shout === '/v') {
+        event.api.addInfoShout(versionText + ': ' + event.api.getVersion());
 
-        if (shout === '/v') {
-            event.api.addInfoShout(versionText + ': ' + event.api.getVersion());
-
-            shout = event.message = '';
-            event.stop = true;
-            event.cancel = true;
-        }
-
-        return shout;
+        shout = event.message = '';
+        event.stop = true;
+        event.cancel = true;
     }
-})(ShoutBox);
+
+    return shout;
+});

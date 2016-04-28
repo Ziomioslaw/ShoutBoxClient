@@ -5,6 +5,10 @@ module.exports = function(grunt) {
         server: grunt.file.readJSON('server.json'),
         concat: {
             js: {
+                options: {
+                    banner: "var ShoutBox = ShoutBox || {};\n(function(context, $) {\n'use strict';\n",
+                    footer: '})(ShoutBox, jQuery);'
+                },
                 src: ['src/javascript/core.js', 'src/javascript/**/*.js'],
                 dest: 'build/shoutbox.js'
             },

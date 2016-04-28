@@ -1,4 +1,3 @@
-(function(context) {
     /*
     // Edit feature (not finished)
     /
@@ -11,4 +10,3 @@
             var text = $.trim($('div#shout_' + privates.lastUserMessage + ' span.shoutMessage').text());
         });
     }*/
-})(ShoutBox);
