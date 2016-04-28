@@ -58,17 +58,30 @@ module.exports = function(grunt) {
                 }]
             },
         },
+        jshint: {
+            options: {
+                curly: true,
+                eqeqeq: true,
+                eqnull: true,
+                browser: true,
+                globals: {
+                    jQuery: true
+                },
+            },
+            afterconcat: ['build/shoutbox.js']
+        }
     });
 
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-scp');
 
     // Default task(s).
-    grunt.registerTask('default', ['clean', 'concat', 'sass', 'uglify']);
-    grunt.registerTask('devUpload', ['clean', 'concat', 'sass', 'uglify', 'copy', 'scp']);
+    grunt.registerTask('default', ['clean', 'concat', 'sass', 'uglify', 'jshint']);
+    grunt.registerTask('devUpload', ['clean', 'concat', 'jshint', 'sass', 'uglify', 'copy', 'scp']);
 };
