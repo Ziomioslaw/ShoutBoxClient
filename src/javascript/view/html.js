@@ -30,7 +30,8 @@
                     + '<div id="shoutbox-form">'
                         + '<p><a href="' + api.buildLink('shout_archive') + '">Zobacz wszystkie</a></p>'
                         + '<form method="post" action="' + api.buildLink('shout') + '" >'
-                            + '<input type="text" name="message" autocomplete="off" maxlength="500" size="100"  placeholder="[wpisz wiadomość]" id="shoutBoxTextBox" /><input type="submit" value="Wyślij" name="submit" />'
+                            + '<input type="text" name="message" autocomplete="off" maxlength="500" size="100" placeholder="[wpisz wiadomość]" id="shoutBoxTextBox" />'
+                            + '<input type="submit" value="Wyślij" name="submit" />'
                         + '</form>'
                     + '</div>';
             }
@@ -86,6 +87,9 @@
                         field.value += value;
                     }
                 }
+            },
+            addInfoShout: function(time, text) {
+                privates.$shoutBoxShouts.append('<div><span class="shoutTimeMarker"><b>Dzisiaj</b> o ' + time + '</span> <span class="shoutNick"><a href="#" >' + api.getShoutBoxInfoShoutNick() + '</a>:</span> <span class="shoutMessage"><span class="infobox">INFO</span>' + text + '</span></div>');
             },
             getShoutBoxMainObject: function() {
                 return privates.$shoutBox;
@@ -181,7 +185,7 @@
                 var shout = getShoutHTML(id);
 
                 shout.attr('title', Translation.textChangedWasText + shout.html());
-                shout.html(Translation.deletedShoutText);
+                shout.html('<span class="infobox">DELETED</span>');
             });
         }
 

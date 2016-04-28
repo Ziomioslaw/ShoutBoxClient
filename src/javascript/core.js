@@ -1,7 +1,7 @@
 'use strict';
 var ShoutBox = ShoutBox || {};
 
-(function(context) {
+(function(context, $) {
     context.ifNullTakeDefault = function(value, defaultValue) {
         return (value !== null) ? value : defaultValue;
     };
@@ -87,6 +87,9 @@ var ShoutBox = ShoutBox || {};
             setOptionValue: function(name, value) {
                 privates.storage.setValue(name, value);
             },
+            getConfigValue: function(name) {
+                return configuration[name];
+            },
             sendCommandToView: function() {
                 var parameters = Array.slice(arguments);
                 var command = parameters.shift();
@@ -115,6 +118,15 @@ var ShoutBox = ShoutBox || {};
                     privates.refreshManager.start();
                 });
             },
+            addInfoShout: function(text) {
+                var time = timeFormat(new Date());
+
+                privates.view.addInfoShout(time, text);
+
+                function timeFormat(time) {
+                    return ('0' + time.getHours()).slice(-2) + ':' + ('0' + time.getMinutes()).slice(-2) + ':' + ('0' + time.getSeconds()).slice(-2);
+                }
+            },
             buildDeleteLink: function(shoutId) {
                 return scripturl + '?action=delete_shout;sesc=' + sessionId + ';sid=' + shoutId + '#shoutbox';
             },
@@ -133,6 +145,9 @@ var ShoutBox = ShoutBox || {};
             },
             getUser: function() {
                 return privates.user;
+            },
+            getShoutBoxInfoShoutNick: function() {
+                return 'ShoutBox';
             }
         };
 
@@ -157,18 +172,20 @@ var ShoutBox = ShoutBox || {};
                 timeForRefresh: 10000,
                 viewName: 'HTMLView',
                 storage: 'PreferenceByLocalStorageManager',
-                publicAPI: false
+                publicAPI: false,
+                showNoviceWarning: true
             };
 
             if (paramaters) {
                 addOptionIfExist('shoutsLimit', toInt);
                 addOptionIfExist('publicAPI', toBoolean);
+                addOptionIfExist('showNoviceWarning', toBoolean);
             }
 
             return configuration;
 
             function addOptionIfExist(name, convert) {
-                if (paramaters.hasOwnProperty('name')) {
+                if (paramaters.hasOwnProperty(name)) {
                     configuration[name] = convert(paramaters[name]);
                 }
             }
@@ -330,7 +347,7 @@ var ShoutBox = ShoutBox || {};
             var json = JSON.stringify(preference);
             $.cookie(cookieName, json);
         }
-    }
+    };
 
     context.PreferenceByLocalStorageManager = function() {
         var prefix = 'shoutbox:';
@@ -356,7 +373,7 @@ var ShoutBox = ShoutBox || {};
                 window.localStorage.setItem(prefix + name, value);
             }
         };
-    }
+    };
 
     function IntervalCallback(callback, delay) {
         var idInterval = null;
@@ -372,5 +389,4 @@ var ShoutBox = ShoutBox || {};
             }
         };
     }
-
-})(ShoutBox);
+})(ShoutBox, jQuery);

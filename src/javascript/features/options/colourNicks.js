@@ -6,6 +6,8 @@
         var regex = /color: (#[0-9a-fA-F]+);/;
         var nicks = {};
 
+        nicks[shoutboxAPI.getShoutBoxInfoShoutNick()] = 'gold';
+
         view.registerOption('colourNicks', false)
             .setOnLabel('icon-bubble', 'Pokazuj kolory na nickach')
             .setOffLabel('icon-bubble2', 'Niepokazuj kolorów na nickach')
