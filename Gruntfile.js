@@ -61,11 +61,13 @@ module.exports = function(grunt) {
         jshint: {
             options: {
                 curly: true,
-                eqeqeq: true,
+                eqeqeq: false,
                 eqnull: true,
                 browser: true,
+                laxbreak: true,
                 globals: {
-                    jQuery: true
+                    jQuery: true,
+                    getXMLDocument: true
                 },
             },
             afterconcat: ['build/shoutbox.js']

@@ -37,7 +37,7 @@
 
                 lastNewShoutNumber = newShouts;
             }
-        };
+        }
 
         function playSomeSounds(soundPath) {
             var trident = !!navigator.userAgent.match(/Trident\/7.0/);

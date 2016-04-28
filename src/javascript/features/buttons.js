@@ -1,4 +1,4 @@
-(function(context) {
+(function(context, $) {
     context.AdditionalFeatureManager.register(shoutBoxAllShoutReadButton);
     context.AdditionalFeatureManager.register(addBeforeDeleteMessage);
     context.AdditionalFeatureManager.register(shoutAuthorsNicksToButton);
@@ -14,7 +14,7 @@
 
     function addBeforeDeleteMessage(shoutboxAPI, view) {
         view.getShoutBoxMainObject().on('click', 'a.shoutDeleteButton', function(event) {
-            if (confirm('Na pewno chcesz usunąć ten shout?')) {
+            if (context.confirm('Na pewno chcesz usunąć ten shout?')) {
                 shoutboxAPI.deleteShout($(event.target).parent()[0].id.substr(6));
             }
 
@@ -33,4 +33,4 @@
             return false;
         });
     }
-})(ShoutBox);
+})(ShoutBox, jQuery);

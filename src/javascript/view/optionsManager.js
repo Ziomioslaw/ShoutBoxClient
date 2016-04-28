@@ -69,5 +69,5 @@
                 $button.html(label);
             }
         }
-    }
+    };
 })(ShoutBox);

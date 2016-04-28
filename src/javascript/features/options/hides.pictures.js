@@ -1,4 +1,4 @@
-(function(context) {
+(function(context, $) {
     context.AdditionalFeatureManager.register(function(shoutboxAPI, view) {
         var replacementLabel = '[IMG]';
         var $shoutBox = view.getShoutBoxMainObject();
@@ -35,4 +35,4 @@
                 });
         }
     });
-})(ShoutBox);
+})(ShoutBox, jQuery);

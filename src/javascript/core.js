@@ -1,9 +1,13 @@
-'use strict';
 var ShoutBox = ShoutBox || {};
 
 (function(context, $) {
+    'use strict';
     context.ifNullTakeDefault = function(value, defaultValue) {
         return (value !== null) ? value : defaultValue;
+    };
+
+    context.confirm = function(question) {
+        return window.confirm(question);
     };
 
     context.AdditionalFeatureManager = (function() {
@@ -40,7 +44,7 @@ var ShoutBox = ShoutBox || {};
                     }
                 }
             }
-        }
+        };
     })();
 
     context.AdditionalParser = (function() {
