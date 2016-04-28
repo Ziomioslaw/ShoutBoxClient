@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
-    // Project configuration.
+    var basics = null;
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         server: grunt.file.readJSON('server.json'),
@@ -87,7 +88,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-scp');
 
+    basics = [ 'clean', 'concat', 'sass', 'uglify', 'jshint' ];
+
     // Default task(s).
-    grunt.registerTask('default', ['clean', 'concat', 'sass', 'uglify', 'jshint']);
-    grunt.registerTask('devUpload', ['clean', 'concat', 'jshint', 'sass', 'uglify', 'copy', 'scp']);
+    grunt.registerTask('default', basics);
+    grunt.registerTask('devUpload', basics.concat(['scp']));
+    grunt.registerTask('devUploadWithFonts', basics.concat(['copy', 'scp']));
 };
