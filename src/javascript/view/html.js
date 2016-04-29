@@ -76,7 +76,7 @@ context.HTMLView = function(api) {
                     field.focus();
                     var1 = document.selection.createRange();
                     var1.text = value;
-                } else if (field.selectionStart || field.selectionStart == '0') { //MOZILLA and others
+                } else if (field.selectionStart || field.selectionStart === '0') { //MOZILLA and others
                     var1 = field.selectionStart;
                     var2 = field.selectionEnd;
                     field.value = field.value.substring(0, var1)
@@ -163,7 +163,7 @@ context.HTMLView = function(api) {
             metadata.classes.push('shoutForYou');
         }
 
-        if (metadata.memberId == api.getUser().Id) {
+        if (metadata.memberId === api.getUser().Id) {
             metadata.classes.push('shoutItsYou');
         } else {
             metadata.classes.push('newShout');

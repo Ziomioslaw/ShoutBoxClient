@@ -9,11 +9,11 @@ context.AdditionalParser.register((function(){
         action: function(metadata) {
             metadata.classes.push('shoutMeMessage');
 
-            var dice = matched[1];
+            var dice = parseInt(matched[1], 10);
             var result = matched[2];
 
-            if (dice == 2) {
-                metadata.message = ' rzuca moneta ... wypada: ' + (result == 1 ? ' orzel' : 'reszka');
+            if (dice === 2) {
+                metadata.message = ' rzuca moneta ... wypada: ' + (result === '1' ? ' orzel' : 'reszka');
             } else {
                 metadata.message = ' rzuca kostka k' + dice + ' ... wypadlo: ' + result;
             }

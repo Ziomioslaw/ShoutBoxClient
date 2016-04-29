@@ -269,8 +269,8 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
                 }
 
                 oldShout = olds[indexOfOld];
-                if (oldShout.id == newShout.id) {
-                    if (oldShout.message != newShout.message) {
+                if (oldShout.id === newShout.id) {
+                    if (oldShout.message !== newShout.message) {
                         fedit(newShout);
                     }
 
@@ -328,7 +328,7 @@ context.PreferenceByCookieManager = function() {
     function load() {
         var cookieValue = $.cookie(cookieName), tmp;
 
-        if (typeof cookieValue != 'undefined') {
+        if (typeof cookieValue !== 'undefined') {
             tmp = JSON.parse(cookieValue);
             if (!!tmp) {
                 preference = tmp;
