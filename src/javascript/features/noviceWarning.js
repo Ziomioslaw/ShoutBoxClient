@@ -1,4 +1,4 @@
-context.AdditionalFeatureManager.register(function(shoutboxAPI, view) {
+context.Features.register(function(shoutboxAPI, view) {
     if (!shoutboxAPI.getConfigValue('showNoviceWarning')) {
         return;
     }

@@ -1,4 +1,4 @@
-context.AdditionalFeatureManager = (function() {
+context.Features = (function() {
     var register = [];
 
     return {

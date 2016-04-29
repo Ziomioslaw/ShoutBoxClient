@@ -1,4 +1,4 @@
-context.AdditionalFeatureManager.register(function(shoutboxAPI, view) {
+context.Features.register(function(shoutboxAPI, view) {
     var shoutbox = view.getShoutBoxMainObject();
 
     shoutbox.on('click', '.shoutNick > a', function(event) {

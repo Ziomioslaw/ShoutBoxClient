@@ -93,7 +93,7 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         privates.refreshManager = new IntervalCallback(intervalCallback, configuration.timeForRefresh);
         privates.refreshManager.start();
 
-        context.AdditionalFeatureManager.run(api, privates.view);
+        context.Features.run(api, privates.view);
 
         if (configuration.publicAPI) {
             context.API = api;

@@ -1,4 +1,4 @@
-context.AdditionalFeatureManager.register(function(shoutBoxAPI, view) {
+context.Features.register(function(shoutBoxAPI, view) {
     var oryginalPageTitle = document.title;
     var $shoutBox = view.getShoutBoxMainObject();
 

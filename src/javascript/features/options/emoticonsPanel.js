@@ -1,4 +1,4 @@
-context.AdditionalFeatureManager.register(function(shoutboxAPI, view) {
+context.Features.register(function(shoutboxAPI, view) {
     var emoticonPanelBox = $('<div id="shoutbox-emoticons-box"></div>');
 
     emoticonPanelBox
