@@ -4,6 +4,7 @@ context.AdditionalParser.register((function(){
     return {
         condition: function(metadata) {
             matched = metadata.message.match(/^&nbsp;\/k([0-9]+);=([0-9]+)/);
+
             return matched !== null;
         },
         action: function(metadata) {
@@ -17,6 +18,8 @@ context.AdditionalParser.register((function(){
             } else {
                 metadata.message = ' rzuca kostka k' + dice + ' ... wypadlo: ' + result;
             }
+
+            metadata.message += '<span class="infobox">DICE ROLL</span>';
         }
     };
 })());
