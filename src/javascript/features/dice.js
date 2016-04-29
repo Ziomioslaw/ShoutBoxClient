@@ -1,4 +1,4 @@
-context.AdditionalParser.register((function(){
+context.Parsers.register((function(){
     var matched;
 
     return {

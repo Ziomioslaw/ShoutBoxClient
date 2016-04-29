@@ -1,4 +1,4 @@
-context.AdditionalParser = (function() {
+context.Parsers = (function() {
     var registred = [];
 
     return {

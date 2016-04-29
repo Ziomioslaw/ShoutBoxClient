@@ -175,7 +175,7 @@ context.HTMLView = function(api) {
             metadata.message = metadata.message.replace(/&nbsp;\/me/, '');
         }
 
-        context.AdditionalParser.parse(metadata);
+        context.Parsers.parse(metadata);
         privates.visibleShouts.push(metadata);
     }
 
