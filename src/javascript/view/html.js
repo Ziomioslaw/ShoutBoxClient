@@ -17,7 +17,7 @@ context.HTMLView = function(api) {
             $shoutBox: $shoutbox,
             $shoutBoxShouts: $shoutbox.find('#shoutbox-shouts'),
             $shoutBoxForm: $form.find('form'),
-            $shoutBoxHorizontalButtons: $form.find('p'),
+            $shoutBoxHorizontalButtons: $form.find('.shoutbox-buttons'),
             shoutBoxTextBox: $form.find('#shoutBoxTextBox')[0],
             lastMessage: null,
             optionsManager: new context.OptionsManager(api, $shoutbox.find('#shoutbox-options'))
@@ -27,7 +27,7 @@ context.HTMLView = function(api) {
             return '<div id="shoutbox-options"></div>'
                 + '<div id="shoutbox-shouts"></div>'
                 + '<div id="shoutbox-form">'
-                    + '<p><a href="' + api.buildLink('shout_archive') + '">Zobacz wszystkie</a></p>'
+                    + '<div class="shoutbox-buttons"><a href="' + api.buildLink('shout_archive') + '">Zobacz wszystkie</a></div>'
                     + '<form method="post" action="' + api.buildLink('shout') + '" >'
                         + '<input type="text" name="message" autocomplete="off" maxlength="500" size="100" placeholder="[wpisz wiadomość]" id="shoutBoxTextBox" />'
                         + '<input type="submit" value="Wyślij" name="submit" />'
