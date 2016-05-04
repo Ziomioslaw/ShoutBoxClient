@@ -7,7 +7,8 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         storage: null,
         view: null,
         refreshManager: null,
-        user: { Id: userId, Name: userName }
+        user: { Id: userId, Name: userName },
+        timeServer: null
     };
     var configuration = buildConfiguration(privates, paramaters);
     var api = {
@@ -55,9 +56,7 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
             });
         },
         addInfoShout: function(text) {
-            var time = timeFormat(new Date());
-
-            privates.view.addInfoShout(time, text);
+            privates.view.addInfoShout(privates.timeServer.getNowTime(), text);
         },
         buildDeleteLink: function(shoutId) {
             return scripturl + '?action=delete_shout;sesc=' + sessionId + ';sid=' + shoutId + '#shoutbox';
@@ -87,6 +86,7 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         privates.view = new context[configuration.viewName](api);
         privates.storage = new context[configuration.storage]();
         privates.refreshManager = new IntervalCallback(intervalCallback, configuration.timeForRefresh);
+        privates.timeServer = new context.TimeServer();
         privates.refreshManager.start();
 
         context.Features.run(api, privates.view);
@@ -142,15 +142,7 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
                 parseAndSendShoutsToView(repackShouts(XMLDoc));
             });
         } catch(e) {
-            var message;
-
-            if (typeof e === 'string') {
-                message = e;
-            } else {
-                message = e.message;
-            }
-
-            privates.view.addErrorShout(timeFormat(new Date()), message);
+            displayException(e);
         }
     }
 
@@ -251,7 +243,15 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         return event;
     }
 
-    function timeFormat(time) {
-        return ('0' + time.getHours()).slice(-2) + ':' + ('0' + time.getMinutes()).slice(-2) + ':' + ('0' + time.getSeconds()).slice(-2);
+    function displayException(e) {
+        var message;
+
+        if (typeof e === 'string') {
+            message = e;
+        } else {
+            message = e.message;
+        }
+
+        privates.view.addErrorShout(privates.timeServer.getNowTime(), message);
     }
 };
