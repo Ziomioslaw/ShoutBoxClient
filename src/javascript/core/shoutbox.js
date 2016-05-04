@@ -38,22 +38,27 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
             return privates.view[command].apply(privates.view, parameters);
         },
         sendMessage: function(message) {
-            var event = prepearMessage(message);
-            if (event.cancel) {
-                return event;
+            try
+            {
+                var event = prepearMessage(message);
+                if (event.cancel) {
+                    return event;
+                }
+
+                privates.refreshManager.cancel();
+
+                return $.post(scripturl + '?action=shout', {
+                    qstr: scripturl + '?#shoutbox',
+                    displayname: userName,
+                    memberID: userId,
+                    message: event.message,
+                    sc: sessionId,
+                }).then(function() {
+                    privates.refreshManager.start();
+                });
+            } catch(e) {
+                displayException(e);
             }
-
-            privates.refreshManager.cancel();
-
-            return $.post(scripturl + '?action=shout', {
-                qstr: scripturl + '?#shoutbox',
-                displayname: userName,
-                memberID: userId,
-                message: event.message,
-                sc: sessionId,
-            }).then(function() {
-                privates.refreshManager.start();
-            });
         },
         addInfoShout: function(text) {
             privates.view.addInfoShout(privates.timeServer.getNowTime(), text);
@@ -68,11 +73,15 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
             return 'http://www.gimpuj.info/index.php?action=' + action;
         },
         deleteShout: function(shoutId) {
-            privates.refreshManager.cancel();
+            try {
+                privates.refreshManager.cancel();
 
-            return $.get(this.buildDeleteLink(shoutId)).then(function() {
-                privates.refreshManager.start();
-            });
+                return $.get(this.buildDeleteLink(shoutId)).then(function() {
+                    privates.refreshManager.start();
+                });
+            } catch(e) {
+                displayException(e);
+            }
         },
         getUser: function() {
             return privates.user;
