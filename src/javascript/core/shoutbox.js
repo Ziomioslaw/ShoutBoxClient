@@ -58,10 +58,6 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
             var time = timeFormat(new Date());
 
             privates.view.addInfoShout(time, text);
-
-            function timeFormat(time) {
-                return ('0' + time.getHours()).slice(-2) + ':' + ('0' + time.getMinutes()).slice(-2) + ':' + ('0' + time.getSeconds()).slice(-2);
-            }
         },
         buildDeleteLink: function(shoutId) {
             return scripturl + '?action=delete_shout;sesc=' + sessionId + ';sid=' + shoutId + '#shoutbox';
@@ -136,13 +132,26 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
     }
 
     function intervalCallback() {
-        if (!window.XMLHttpRequest) {
-            throw "Can't work -> window.XMLHttpRequest not exist";
-        }
+        try
+        {
+            if (!window.XMLHttpRequest) {
+                throw "Can't work -> window.XMLHttpRequest not exist";
+            }
 
-        getXMLDocument(scripturl + '?action=shout_xml&limit=' + configuration.shoutsLimit + ';xml', function(XMLDoc) {
-            parseAndSendShoutsToView(repackShouts(XMLDoc));
-        });
+            getXMLDocument(scripturl + '?action=shout_xml&limit=' + configuration.shoutsLimit + ';xml', function(XMLDoc) {
+                parseAndSendShoutsToView(repackShouts(XMLDoc));
+            });
+        } catch(e) {
+            var message;
+
+            if (typeof e === 'string') {
+                message = e;
+            } else {
+                message = e.message;
+            }
+
+            privates.view.addErrorShout(timeFormat(new Date()), message);
+        }
     }
 
     function repackShouts(XMLDoc) {
@@ -240,5 +249,9 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         context.BeforeSubmitManager.call(event);
 
         return event;
+    }
+
+    function timeFormat(time) {
+        return ('0' + time.getHours()).slice(-2) + ':' + ('0' + time.getMinutes()).slice(-2) + ':' + ('0' + time.getSeconds()).slice(-2);
     }
 };
