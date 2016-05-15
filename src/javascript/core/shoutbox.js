@@ -9,13 +9,10 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         refreshManager: null,
         user: { Id: userId, Name: userName },
         timeServer: null,
-        serverAPI: new ServerAPI(scripturl, sessionId)
+        serverAPI: new DeveloperServerAPI(scripturl, sessionId)
     };
     var configuration = buildConfiguration(privates, paramaters);
     var api = {
-        getShoutsLimit: function() {
-            return configuration.shoutsLimit;
-        },
         getVersion: function() {
             return privates.version;
         },
@@ -76,9 +73,11 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
             try {
                 privates.refreshManager.cancel();
 
-                return $.get(this.buildDeleteLink(shoutId)).then(function() {
-                    privates.refreshManager.start();
-                });
+                return privates.serverAPI
+                    .deleteShout(shoutId)
+                    .then(function() {
+                        privates.refreshManager.start();
+                    });
             } catch(e) {
                 displayException(e);
             }
@@ -147,29 +146,15 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
                 throw "Can't work -> window.XMLHttpRequest not exist";
             }
 
-            getXMLDocument(privates.serverAPI.buildGetShoutsLink(configuration.shoutsLimit), function(XMLDoc) {
-                parseAndSendShoutsToView(repackShouts(XMLDoc));
-            });
+            return privates
+                .serverAPI
+                .getShouts(configuration.shoutsLimit)
+                .then(function(shouts) {
+                    parseAndSendShoutsToView(shouts);
+                });
         } catch(e) {
             displayException(e);
         }
-    }
-
-    function repackShouts(XMLDoc) {
-        var shouts = XMLDoc.getElementsByTagName('shout'), result = [];
-        for (var shout = null, i = 0, max = shouts.length; i < max; i++) {
-            shout = shouts[i];
-            result.push({
-                id: shout.getAttribute("id"),
-                memberName: shout.getAttribute("member_name"),
-                memberId: parseInt(shout.getAttribute("member_id"), 10),
-                canDelete: shout.getAttribute("can_delete"),
-                time: shout.getAttribute("time"),
-                message: shout.getAttribute("message")
-            });
-        }
-
-        return result;
     }
 
     function parseAndSendShoutsToView(shouts) {
@@ -264,29 +249,3 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         privates.view.addErrorShout(privates.timeServer.getNowTime(), message);
     }
 };
-
-function ServerAPI(scripturl, sessionId) {
-    this.buildGetShoutsLink = function(limit) {
-        return scripturl + '?action=shout_xml&limit=' + limit + ';xml';
-    };
-
-    this.buildAddShoutLink = function() {
-        return scripturl + '?action=shout';
-    };
-
-    this.buildDeleteLink = function(shoutId) {
-        return scripturl + '?action=delete_shout;sesc=' + sessionId + ';sid=' + shoutId + '#shoutbox';
-    };
-
-    this.buildProfileLink = function(memberId) {
-        return scripturl + '?action=profile;u=' + memberId;
-    };
-
-    this.buildActionLink = function(action) {
-        return 'http://www.gimpuj.info/index.php?action=' + action;
-    };
-
-    this.buildLink = function(action) {
-        return 'http://www.gimpuj.info/index.php?action=' + action;
-    };
-}

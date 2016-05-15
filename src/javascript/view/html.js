@@ -206,7 +206,7 @@ context.HTMLView = function(api) {
     }
 
     function reduceShoutsNumber() {
-        var oldLenght = privates.visibleShouts.length - api.getShoutsLimit();
+        var oldLenght = privates.visibleShouts.length - api.getConfigValue('shoutsLimit');
 
         privates.visibleShouts
             .splice(0, oldLenght)
