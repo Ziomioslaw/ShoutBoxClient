@@ -8,7 +8,8 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         view: null,
         refreshManager: null,
         user: { Id: userId, Name: userName },
-        timeServer: null
+        timeServer: null,
+        serverAPI: new ServerAPI(scripturl, sessionId)
     };
     var configuration = buildConfiguration(privates, paramaters);
     var api = {
@@ -47,8 +48,7 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
 
                 privates.refreshManager.cancel();
 
-                return $.post(scripturl + '?action=shout', {
-                    qstr: scripturl + '?#shoutbox',
+                return $.post(privates.serverAPI.buildAddShoutLink(), {
                     displayname: userName,
                     memberID: userId,
                     message: event.message,
@@ -64,13 +64,13 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
             privates.view.addInfoShout(privates.timeServer.getNowTime(), text);
         },
         buildDeleteLink: function(shoutId) {
-            return scripturl + '?action=delete_shout;sesc=' + sessionId + ';sid=' + shoutId + '#shoutbox';
+            return privates.serverAPI.buildDeleteLink(sessionId, shoutId);
         },
         buildProfileLink: function(memberId) {
-            return scripturl + '?action=profile;u=' + memberId;
+            return privates.serverAPI.buildProfileLink(memberId);
         },
         buildLink: function(action) {
-            return 'http://www.gimpuj.info/index.php?action=' + action;
+            return privates.serverAPI.buildActionLink(action);
         },
         deleteShout: function(shoutId) {
             try {
@@ -147,7 +147,7 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
                 throw "Can't work -> window.XMLHttpRequest not exist";
             }
 
-            getXMLDocument(scripturl + '?action=shout_xml&limit=' + configuration.shoutsLimit + ';xml', function(XMLDoc) {
+            getXMLDocument(privates.serverAPI.buildGetShoutsLink(configuration.shoutsLimit), function(XMLDoc) {
                 parseAndSendShoutsToView(repackShouts(XMLDoc));
             });
         } catch(e) {
@@ -264,3 +264,29 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         privates.view.addErrorShout(privates.timeServer.getNowTime(), message);
     }
 };
+
+function ServerAPI(scripturl, sessionId) {
+    this.buildGetShoutsLink = function(limit) {
+        return scripturl + '?action=shout_xml&limit=' + limit + ';xml';
+    };
+
+    this.buildAddShoutLink = function() {
+        return scripturl + '?action=shout';
+    };
+
+    this.buildDeleteLink = function(shoutId) {
+        return scripturl + '?action=delete_shout;sesc=' + sessionId + ';sid=' + shoutId + '#shoutbox';
+    };
+
+    this.buildProfileLink = function(memberId) {
+        return scripturl + '?action=profile;u=' + memberId;
+    };
+
+    this.buildActionLink = function(action) {
+        return 'http://www.gimpuj.info/index.php?action=' + action;
+    };
+
+    this.buildLink = function(action) {
+        return 'http://www.gimpuj.info/index.php?action=' + action;
+    };
+}
