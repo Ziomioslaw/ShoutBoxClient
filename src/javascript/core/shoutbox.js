@@ -50,8 +50,12 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
                     memberID: userId,
                     message: event.message,
                     sc: sessionId,
-                }).then(function() {
+                })
+                .promise()
+                .always(function() {
                     privates.refreshManager.start();
+                }).fail(function(e) {
+                    displayException(e);
                 });
             } catch(e) {
                 displayException(e);
