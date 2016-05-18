@@ -2,7 +2,7 @@ context.Features.register(function(shoutboxAPI, view) {
     var defaultColour = '#a4bf37';
     var offlineColour = 'gray';
     var shouts = view.getShoutBoxMainObject();
-    var regex = /color: (#[0-9a-fA-F]+);/;
+    var regex = /color: (.+);/;
     var nicks = {};
 
     nicks[shoutboxAPI.getShoutBoxInfoShoutNick()] = 'gold';
