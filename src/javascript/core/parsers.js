@@ -1,6 +1,19 @@
 context.Parsers = (function() {
     var registred = [];
 
+    // for IE (mostly)
+    if (!Array.prototype.find) {
+        Array.prototype.find = function(callback, thisArg) {
+            for(var i = 0; i < this.length; i++){
+                if(callback.call(thisArg || window, this[i], i, this)) {
+                    return this[i];
+                }
+            }
+
+            return null;
+        };
+    }
+
     return {
         register: function(f) {
             registred.push(f);
