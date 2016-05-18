@@ -26,7 +26,7 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
             return configuration[name];
         },
         sendCommandToView: function() {
-            var parameters = Array.slice(arguments);
+            var parameters = Array.prototype.slice.call(arguments);
             var command = parameters.shift();
 
             if (typeof privates.view[command] !== 'function') {
