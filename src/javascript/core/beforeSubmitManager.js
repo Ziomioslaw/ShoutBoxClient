@@ -5,8 +5,9 @@ context.BeforeSubmitManager = (function() {
         register: function(f) {
             registred.push(f);
         },
-        call: function(event) {
+        run: function(event) {
             var origin = event.origin;
+
             for (var i = 0, max = registred.length; i < max; i++) {
                 event.origin = origin;
                 event.message = registred[i](event.message, event);

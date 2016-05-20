@@ -10,4 +10,6 @@ context.BeforeSubmitManager.register(function(shout, event) {
         event.stop = true;
         event.cancel = true;
     }
+
+    return shout;
 });

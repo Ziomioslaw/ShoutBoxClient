@@ -36,9 +36,18 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
             return privates.view[command].apply(privates.view, parameters);
         },
         sendMessage: function(message) {
+            var event = {
+                wasChanged: false,
+                origin: message,
+                message: message,
+                stop: false,
+                cancel: false,
+                api: api
+            };
+
             try
             {
-                var event = prepearMessage(message);
+                context.BeforeSubmitManager.run(event);
 
                 if (event.cancel) {
                     return event;
@@ -228,21 +237,6 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
                 return;
             }
         }
-    }
-
-    function prepearMessage(message) {
-        var event = {
-            wasChanged: false,
-            origin: message,
-            message: message,
-            stop: false,
-            cancel: false,
-            api: api
-        };
-
-        context.BeforeSubmitManager.call(event);
-
-        return event;
     }
 
     function displayException(e) {
