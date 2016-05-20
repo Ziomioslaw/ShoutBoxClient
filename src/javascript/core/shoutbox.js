@@ -30,7 +30,7 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
             var command = parameters.shift();
 
             if (typeof privates.view[command] !== 'function') {
-                throw "Command '" + command + "' not exist in view";
+                throw new Error("Command '" + command + "' not exist in view");
             }
 
             return privates.view[command].apply(privates.view, parameters);
@@ -39,26 +39,30 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
             try
             {
                 var event = prepearMessage(message);
+
                 if (event.cancel) {
                     return event;
                 }
 
                 privates.refreshManager.cancel();
 
-                return $.post(privates.serverAPI.buildAddShoutLink(), {
-                    displayname: userName,
-                    memberID: userId,
-                    message: event.message,
-                    sc: sessionId,
-                })
-                .promise()
-                .always(function() {
-                    privates.refreshManager.start();
-                }).fail(function(e) {
-                    displayException(e);
-                });
+                event.promise = $.post(privates.serverAPI.buildAddShoutLink(), {
+                        displayname: userName,
+                        memberID: userId,
+                        message: event.message,
+                        sc: sessionId,
+                    })
+                    .promise()
+                    .always(function() {
+                        privates.refreshManager.start();
+                    }).fail(function(e) {
+                        displayException(e);
+                    });
+
+                return event;
             } catch(e) {
                 displayException(e);
+                return event;
             }
         },
         addInfoShout: function(text) {
@@ -147,7 +151,7 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         try
         {
             if (!window.XMLHttpRequest) {
-                throw "Can't work -> window.XMLHttpRequest not exist";
+                throw new Error("Can't work -> window.XMLHttpRequest not exist");
             }
 
             return privates
@@ -243,6 +247,12 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
 
     function displayException(e) {
         var message;
+
+        console.log("Exception", e);
+
+        if (!e.stack) {
+            console.log(e.stack);
+        }
 
         if (typeof e === 'string') {
             message = e;

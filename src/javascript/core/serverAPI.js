@@ -23,7 +23,7 @@ function ServerAPI(scripturl, sessionId) {
         var deferred;
 
         if (!window.XMLHttpRequest) {
-            throw "Can't work -> window.XMLHttpRequest not exist";
+            throw new Error("Can't work -> window.XMLHttpRequest not exist");
         }
 
         deferred = $.Deferred();
