@@ -1,8 +1,4 @@
 function ServerAPI(scripturl, sessionId) {
-    this.buildAddShoutLink = function() {
-        return scripturl + '?action=shout';
-    };
-
     this.buildDeleteLink = function(shoutId) {
         return scripturl + '?action=delete_shout;sesc=' + sessionId + ';sid=' + shoutId + '#shoutbox';
     };
@@ -17,6 +13,11 @@ function ServerAPI(scripturl, sessionId) {
 
     this.buildLink = function(action) {
         return 'http://www.gimpuj.info/index.php?action=' + action;
+    };
+
+    this.addShout = function(data) {
+        return $.post(scripturl + '?action=shout', data)
+            .promise();
     };
 
     this.getShouts = function(limit) {
@@ -62,10 +63,6 @@ function ServerAPI(scripturl, sessionId) {
 }
 
 function DeveloperServerAPI(scripturl, sessionId) {
-    this.buildAddShoutLink = function() {
-        return scripturl + '?action=shout';
-    };
-
     this.buildDeleteLink = function(shoutId) {
         return scripturl + '?action=delete_shout;sesc=' + sessionId + ';sid=' + shoutId + '#shoutbox';
     };
@@ -96,6 +93,11 @@ function DeveloperServerAPI(scripturl, sessionId) {
                     };
                 });
             });
+    };
+
+    this.addShout = function(data) {
+        return $.post('http://www.gimpuj.info/ziomioslaw/shoutbox/shout', data)
+            .promise();
     };
 
     this.deleteShout = function(shoutId) {

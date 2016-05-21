@@ -55,14 +55,12 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
 
                 privates.refreshManager.cancel();
 
-                event.promise = $.post(privates.serverAPI.buildAddShoutLink(), {
+                event.promise = privates.serverAPI.addShout({
                         displayname: userName,
                         memberID: userId,
                         message: event.message,
                         sc: sessionId,
-                    })
-                    .promise()
-                    .always(function() {
+                    }).always(function() {
                         privates.refreshManager.start();
                     }).fail(function(e) {
                         displayException(e);
