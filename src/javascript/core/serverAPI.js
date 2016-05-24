@@ -97,9 +97,7 @@ function DeveloperServerAPI(scripturl, sessionId) {
     };
 
     this.deleteShout = function(shoutId) {
-        return $.post('http://www.gimpuj.info/ziomioslaw/shoutbox/shout/delete', {
-                shoutId: shoutId
-            })
+        return $.post('http://www.gimpuj.info/ziomioslaw/shoutbox/shout/' + shoutId + '/delete')
                 .promise();
     };
 }
