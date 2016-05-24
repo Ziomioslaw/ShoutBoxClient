@@ -63,10 +63,6 @@ function ServerAPI(scripturl, sessionId) {
 }
 
 function DeveloperServerAPI(scripturl, sessionId) {
-    this.buildDeleteLink = function(shoutId) {
-        return scripturl + '?action=delete_shout;sesc=' + sessionId + ';sid=' + shoutId + '#shoutbox';
-    };
-
     this.buildProfileLink = function(memberId) {
         return scripturl + '?action=profile;u=' + memberId;
     };
@@ -101,6 +97,9 @@ function DeveloperServerAPI(scripturl, sessionId) {
     };
 
     this.deleteShout = function(shoutId) {
-        return $.get(this.buildDeleteLink(shoutId));
+        return $.post('http://www.gimpuj.info/ziomioslaw/shoutbox/shout/delete', {
+                shoutId: shoutId
+            })
+                .promise();
     };
 }

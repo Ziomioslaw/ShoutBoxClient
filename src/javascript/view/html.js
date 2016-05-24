@@ -145,7 +145,7 @@ context.HTMLView = function(api) {
     }
 
     function transformIntoHTMLCode(metadata) {
-        var deleteButton = metadata.canDelete ? '<a href="' + api.buildDeleteLink(metadata.id) + '" class="shoutDeleteButton">X</a>' : '';
+        var deleteButton = metadata.canDelete ? '<a href="#" class="shoutDeleteButton">X</a>' : '';
         var timeStamp = '<span class="shoutTimeMarker">' + metadata.time + '</span>';
         var header = '<span class="shoutNick"><a href="' + api.buildProfileLink(metadata.memberId) + '">' + metadata.memberName + '</a>' + (!metadata.me ? ':' : '') + '</span>';
         var message = '<span class="shoutMessage">' + metadata.message + '</span>';
