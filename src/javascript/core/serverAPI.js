@@ -91,6 +91,16 @@ function DeveloperServerAPI(scripturl, sessionId) {
             });
     };
 
+    this.editShout = function(shoutId, find, replace) {
+        console.log(shoutId, find, replace);
+
+        return $.post('http://www.gimpuj.info/ziomioslaw/shoutbox/shout/' + shoutId + '/edit', {
+            search: find,
+            replace: replace
+        })
+                .promise();
+    };
+
     this.addShout = function(data) {
         return $.post('http://www.gimpuj.info/ziomioslaw/shoutbox/shout', data)
             .promise();

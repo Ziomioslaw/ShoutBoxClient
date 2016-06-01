@@ -4,6 +4,7 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         shoutBoxReference: this,
         actualShoutsCollections: null,
         lastShoutId: null,
+        lastUserShoutId: null,
         storage: null,
         view: null,
         refreshManager: null,
@@ -97,6 +98,21 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
                 displayException(e);
             }
         },
+        editLastUserMessage: function(find, replace) {
+            try {
+                if (privates.lastUserShoutId !== null) {
+                    new Error('No last message to edit');
+                }
+
+                return privates.serverAPI
+                    .editShout(privates.lastUserShoutId, find, replace)
+                    .then(function() {
+                        privates.refreshManager.start();
+                    });
+            } catch(e) {
+                displayException(e);
+            }
+        },
         getUser: function() {
             return privates.user;
         },
@@ -177,10 +193,14 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
 
         if (privates.actualShoutsCollections === null) {
             privates.actualShoutsCollections = shouts;
+            shouts.forEach(saveYourLastMessageId);
         } else {
             compareCollection(privates.actualShoutsCollections,
                     shouts,
-                    function (shout) { additional.push(shout); },
+                    function (shout) {
+                        additional.push(shout);
+
+                    },
                     function (shout) { editied.push(shout.id); },
                     function (shout) { deleted.push(shout.id); }
                 );
@@ -233,6 +253,12 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
 
                 ignore = false;
                 return;
+            }
+        }
+
+        function saveYourLastMessageId(shout) {
+            if (shout.memberId === userId) {
+                privates.lastUserShoutId = shout.id;
             }
         }
     }
