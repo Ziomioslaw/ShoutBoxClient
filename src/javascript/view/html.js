@@ -193,11 +193,14 @@ context.HTMLView = function(api) {
 
     function markEditedShouts(idsOfEdited, actualCollection) {
         idsOfEdited.forEach(function(id) {
-            var shout = getShoutHTML(id);
-            var message = shout.html();
+            var shoutRow = getShoutHTML(id);
+            var message = shoutRow.html();
+            var shout = actualCollection.find(function(shout) {
+                return shout.id === id;
+            });
 
-            shout.attr('title', Translation.textChangedWasText + message);
-            shout.html(buildInfoBox(Translation.editedShoutText) + message);
+            shoutRow.attr('title', Translation.textChangedWasText + message);
+            shoutRow.html(buildInfoBox(Translation.editedShoutText) + shout.new_message);
         });
     }
 

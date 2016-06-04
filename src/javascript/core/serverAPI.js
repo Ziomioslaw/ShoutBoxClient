@@ -85,7 +85,8 @@ function DeveloperServerAPI(scripturl, sessionId) {
                         memberId: parseInt(shout.member_id, 10),
                         canDelete: shout.can_delete,
                         time: shout.time,
-                        message: shout.message
+                        message: shout.message,
+                        edited: parseInt(shout.edited, 10) || 0
                     };
                 });
             });

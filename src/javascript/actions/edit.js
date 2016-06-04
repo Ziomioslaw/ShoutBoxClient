@@ -1,5 +1,5 @@
 context.BeforeSubmitManager.register((function(){
-    var regex = /^\/s\/(.*)\/(.*)$/;
+    var regex = /^\/s\/(.*?)\/(.*?)\/?$/;
 
     return function(shout, event) {
         var result = shout.match(regex);

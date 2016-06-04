@@ -197,11 +197,11 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         } else {
             compareCollection(privates.actualShoutsCollections,
                     shouts,
-                    function (shout) {
-                        additional.push(shout);
-
+                    function (shout) { additional.push(shout); },
+                    function (shout, oldShout) {
+                        oldShout.new_message = shout.message;
+                        editied.push(shout.id);
                     },
-                    function (shout) { editied.push(shout.id); },
                     function (shout) { deleted.push(shout.id); }
                 );
         }
@@ -236,8 +236,14 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
 
                 oldShout = olds[indexOfOld];
                 if (oldShout.id === newShout.id) {
-                    if (oldShout.message !== newShout.message) {
-                        fedit(newShout);
+                    if (oldShout.edited === 0) {
+                        if (oldShout.edited > 0) {
+                            fedit(newShout, oldShout);
+                        }
+                    } else {
+                        if (newShout.edited > oldShout.edited) {
+                            fedit(newShout, oldShout);
+                        }
                     }
 
                     indexOfOld++;
