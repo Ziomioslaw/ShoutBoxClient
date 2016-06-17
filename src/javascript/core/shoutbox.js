@@ -1,4 +1,4 @@
-context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, paramaters) {
+context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, baselink, paramaters) {
     var privates = {
         version: '2.0.0',
         shoutBoxReference: this,
@@ -10,7 +10,7 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, par
         refreshManager: null,
         user: { Id: userId, Name: userName },
         timeServer: null,
-        serverAPI: new DeveloperServerAPI(scripturl, sessionId)
+        serverAPI: new ServerAPI(scripturl, sessionId, baselink)
     };
     var configuration = buildConfiguration(privates, paramaters);
     var api = {
