@@ -23,3 +23,5 @@ context.Parsers.register((function(){
         }
     };
 })());
+
+context.HelpManager.register('/k&gt;ile&gt;', 'Rzuć kostką');
