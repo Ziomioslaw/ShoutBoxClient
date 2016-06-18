@@ -14,3 +14,5 @@ context.BeforeSubmitManager.register((function(){
         return shout;
     };
 })());
+
+context.HelpManager.register('/s/błond/błąd', 'Poprawki ostatniego posta');

@@ -11,3 +11,5 @@ context.BeforeSubmitManager.register(function(shout, event) {
 
     return shout;
 });
+
+context.HelpManager.register('/v', 'Wersja');
