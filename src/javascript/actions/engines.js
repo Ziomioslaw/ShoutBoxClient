@@ -8,7 +8,11 @@ context.BeforeSubmitManager.register((function(){
     ];
 
     engines.forEach(function(engine) {
+        var tmp = engine.link.substr(8);
+        var link = tmp.substr(0, tmp.indexOf('/'));
+
         engine.regex = new RegExp('\\[' + engine.nick + ':([^\\]]+)\\]');
+        context.HelpManager.register('[' + engine.nick + ':&lt;fraza&gt;]', 'Szukaj frazy w ' + link);
     });
 
     return function(shout, event) {
