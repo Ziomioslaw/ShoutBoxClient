@@ -19,11 +19,12 @@ Add into HTML code: `new ShoutBox.ShoutBox()`. Parameters:
  * 2sd: Member display nick
  * 3rd: Member ID
  * 4th: Session key
- * 5th: Additional parameters as object
+ * 5th: Link to the server part of ShoutBox
+ * 6th: Additional parameters as object
 
 # Project structure
 
- * File: **core.js** main file of project.
+ * File: **core** main files of project.
  * Directory: **actions** for "Before Submit" actions.
  * Directory: **features** for additional features.
  * Directory: **view** for shoutbox view layer.
