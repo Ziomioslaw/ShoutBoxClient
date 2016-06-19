@@ -24,7 +24,7 @@ Add into HTML code: `new ShoutBox.ShoutBox()`. Parameters:
 
 # Project structure
 
- * File: **core** main files of project.
+ * Directory: **core** main files of project.
  * Directory: **actions** for "Before Submit" actions.
  * Directory: **features** for additional features.
  * Directory: **view** for shoutbox view layer.
