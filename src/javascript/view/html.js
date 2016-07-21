@@ -176,10 +176,10 @@ context.HTMLView = function(api) {
             metadata.classes.push('newShout');
         }
 
-        if (metadata.message.match(/^&nbsp;\/me .*/)) {
+        if (metadata.message.match(/^\/me .*/)) {
             metadata.me = true;
             metadata.classes.push('shoutMeMessage');
-            metadata.message = metadata.message.replace(/&nbsp;\/me/, '');
+            metadata.message = metadata.message.replace(/\/me/, '');
         }
 
         context.Parsers.parse(metadata);
