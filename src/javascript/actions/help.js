@@ -1,5 +1,5 @@
 context.BeforeSubmitManager.register(function(shout, event) {
-    var matched = shout.match(/\/help(\s+(.+))?/);
+    var matched = shout.match(/^\/help(\s+(.+))?$/);
     if (matched !== null) {
         if (!matched[1]) {
             event.api.addInfoShout(
