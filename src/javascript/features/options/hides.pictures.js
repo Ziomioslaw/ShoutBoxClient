@@ -3,8 +3,8 @@ context.Features.register(function(shoutboxAPI, view) {
     var $shoutBox = view.getShoutBoxMainObject();
 
     view.registerOption('hidePictures', false)
-        .setOnLabel('icon-file-empty', 'Spłaszczaj obrazki do linków')
-        .setOffLabel('icon-file-picture', 'Nie spłaszczaj obrazków do linków')
+        .setOnLabel('icon-file-empty', 'Zastąp obrazki linkami')
+        .setOffLabel('icon-file-picture', 'Nie zastępuj obrazków linkami')
         .setOnClickCallback(function() {
             $shoutBox.on('shoutbox:view:notify', notifyHandler);
             notifyHandler();
