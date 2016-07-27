@@ -210,6 +210,8 @@ context.ShoutBox = function ShoutBox(scripturl, userName, userId, sessionId, bas
             privates.lastShoutId = shouts[shouts.length -1].id;
         }
 
+        additional.forEach(saveYourLastMessageId);
+
         privates.view.shouts(
                 privates.actualShoutsCollections,
                 additional,
