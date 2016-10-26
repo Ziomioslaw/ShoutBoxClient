@@ -76,6 +76,22 @@ module.exports = function(grunt) {
                 },
             },
             afterconcat: ['build/shoutbox.js']
+        },
+        gitinfo: {},
+        replace: {
+            dist: {
+                options: {
+                    patterns: [
+                        {
+                            match: 'GIT_SHORT_SHA',
+                            replacement: '<%= gitinfo.local.branch.current.shortSHA %>'
+                        }
+                    ]
+                },
+                files: [
+                    { src: ['build/shoutbox.js'], dest: 'build/shoutbox.js' }
+                ]
+            }
         }
     });
 
@@ -86,8 +102,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-scp');
+    grunt.loadNpmTasks('grunt-gitinfo');
+    grunt.loadNpmTasks('grunt-replace');
 
-    basics = [ 'clean', 'concat', 'sass', 'uglify', 'jshint' ];
+    basics = [ 'gitinfo', 'clean', 'concat', 'sass', 'uglify', 'jshint', 'replace' ];
 
     // Default task(s).
     grunt.registerTask('default', basics);
