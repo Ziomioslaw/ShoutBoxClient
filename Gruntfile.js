@@ -109,6 +109,16 @@ module.exports = function(grunt) {
 
     // Default task(s).
     grunt.registerTask('default', basics);
-    grunt.registerTask('devUpload', basics.concat(['scp']));
-    grunt.registerTask('devUploadWithFonts', basics.concat(['copy', 'scp']));
+    grunt.registerTask('upload', function(arg1) {
+        var tasks = basics;
+
+        if (arg1 === 'fonts') {
+            grunt.log.writeln('Loading fonts');
+            tasks.concat(['copy']);
+        } else {
+            grunt.log.writeln('Skipping fonts');
+        }
+ 
+        grunt.task.run(tasks);
+    });
 };
