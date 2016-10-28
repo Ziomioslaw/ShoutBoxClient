@@ -114,11 +114,13 @@ module.exports = function(grunt) {
 
         if (arg1 === 'fonts') {
             grunt.log.writeln('Loading fonts');
-            tasks.concat(['copy']);
+            tasks = tasks.concat(['copy']);
         } else {
             grunt.log.writeln('Skipping fonts');
         }
- 
+
+        tasks = tasks.concat(['scp']);
+
         grunt.task.run(tasks);
     });
 };
