@@ -62,7 +62,7 @@ context.HTMLView = function(api) {
 
             addNewShouts(newCollection);
             markDeletedShouts(idsOfDeleted, actualCollection);
-            markEditedShouts(idsOfEdited, actualCollection);
+            markEditedShouts(idsOfEdited, actualCollection, newCollection);
 
             triggerEventsAfterParsedShouts();
         },
@@ -195,16 +195,28 @@ context.HTMLView = function(api) {
         });
     }
 
-    function markEditedShouts(idsOfEdited, actualCollection) {
+    function markEditedShouts(idsOfEdited, actualCollection, newCollection) {
         idsOfEdited.forEach(function(id) {
             var shoutRow = getShoutHTML(id);
-            var message = shoutRow.html();
-            var shout = actualCollection.find(function(shout) {
-                return shout.id === id;
-            });
+            if (shoutRow) {
+                var message = shoutRow.html();
+                var shout = actualCollection.find(seekFunction);
+                if (!shout) {
+                    shout = newCollection.find(seekFunction);
+                }
+                if (!shout) {
+                    return;
+                }
 
-            shoutRow.attr('title', Translation.textChangedWasText + message);
-            shoutRow.html(buildInfoBox(Translation.editedShoutText) + shout.new_message);
+                shoutRow.attr('title', Translation.textChangedWasText + message);
+                shoutRow.html(buildInfoBox(Translation.editedShoutText) + shout.new_message);
+            }
+
+            return;
+
+            function seekFunction(shout) {
+                return shout.id === id;
+            }
         });
     }
 
