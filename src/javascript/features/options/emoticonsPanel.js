@@ -55,7 +55,7 @@ context.Features.register(function(shoutboxAPI, view) {
 
     function buildEmoticonsButtons(emoticons) {
         return emoticons.reduce(function(prev, actual) {
-            return prev + '<img alt="' + actual.label + '" src="http://www.gimpuj.info/Smileys/sc_kwart/' + actual.file + '" data-code="' + actual.code + '">\n';
+            return prev + '<img alt="' + actual.label + '" src="/Smileys/sc_kwart/' + actual.file + '" data-code="' + actual.code + '">\n';
         }, '');
     }
 });
