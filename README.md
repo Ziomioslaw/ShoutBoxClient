@@ -11,7 +11,27 @@ Java Script client shoutbox.
 * [jQuery Cookie Plugin v1.4.1](https://github.com/carhartl/jquery-cookie)  (for Cookie Storage)
 * jQuery Favicon Notify ... with unknown origin...
 
-# Install:
+# Starting developing
+
+ * `npm install`
+ * for first build: `grunt`
+ * for deploy: `grunt upload`
+ * fonts are uploaded only on demand: `grunt upload fonts`
+
+# Server.json
+
+The JSON file containing data to needed upload the data.
+
+```json
+{
+    "host": "ssh host",
+    "username": "ssh username",
+    "password": "ssh password",
+    "path": "absolute path to place, where code should be uploaded"
+}
+```
+
+# Install on webpage
 
 Add into HTML code: `new ShoutBox.ShoutBox()`. Parameters:
 
